@@ -28,7 +28,8 @@ const TypeChart = {
     blood: {
         damageTaken: {
             fallout: 1,
-            Bug: 1,
+            Blood: 2,
+			Bug: 1,
             Cosmic: 0,
             Crystal: 0,
             Dark: 1,
@@ -58,15 +59,15 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 0,
-            Wind: 0,
-            Blood: 2
+            Wind: 0
         },
         inherit: true
     },
     bug: {
         damageTaken: {
             fallout: 3,
-            Bug: 0,
+            Blood: 2,
+			Bug: 0,
             Cosmic: 0,
             Crystal: 0,
             Dark: 0,
@@ -96,14 +97,14 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 0,
-            Wind: 1,
-            Blood: 2
+            Wind: 1
         },
         inherit: true
     },
     cosmic: {
         damageTaken: {
-            Bug: 0,
+            Blood: 0,
+			Bug: 0,
             Cosmic: 2,
             Crystal: 0,
             Dark: 2,
@@ -133,13 +134,13 @@ const TypeChart = {
             Steel: 2,
             Stellar: 0,
             Water: 0,
-            Wind: 3,
-            Blood: 0
+            Wind: 3
         }
     },
     crystal: {
         damageTaken: {
-            Bug: 0,
+            Blood: 0,
+			Bug: 0,
             Cosmic: 0,
             Crystal: 2,
             Dark: 0,
@@ -169,15 +170,15 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 0,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         }
     },
     dark: {
         damageTaken: {
             cursedwinds: 3,
             prankster: 3,
-            Bug: 1,
+            Blood: 2,
+			Bug: 1,
             Cosmic: 0,
             Crystal: 1,
             Dark: 2,
@@ -207,14 +208,14 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 0,
-            Wind: 0,
-            Blood: 2
+            Wind: 0
         },
         inherit: true
     },
     digital: {
         damageTaken: {
-            Bug: 1,
+            Blood: 0,
+			Bug: 1,
             Cosmic: 2,
             Crystal: 0,
             Dark: 1,
@@ -244,13 +245,13 @@ const TypeChart = {
             Steel: 2,
             Stellar: 0,
             Water: 1,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         }
     },
     dragon: {
         damageTaken: {
-            Bug: 0,
+            Blood: 0,
+			Bug: 0,
             Cosmic: 1,
             Crystal: 0,
             Dark: 0,
@@ -280,15 +281,15 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 2,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         },
         inherit: true
     },
     eldritch: {
         damageTaken: {
             cursedwinds: 3,
-            Bug: 0,
+            Blood: 0,
+			Bug: 0,
             Cosmic: 2,
             Crystal: 2,
             Dark: 2,
@@ -318,15 +319,15 @@ const TypeChart = {
             Steel: 2,
             Stellar: 0,
             Water: 0,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         }
     },
     electric: {
         damageTaken: {
             par: 3,
             thunderstorm: 3,
-            Bug: 0,
+            Blood: 0,
+			Bug: 0,
             Cosmic: 0,
             Crystal: 0,
             Dark: 0,
@@ -356,14 +357,14 @@ const TypeChart = {
             Steel: 2,
             Stellar: 0,
             Water: 0,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         },
         inherit: true
     },
     fairy: {
         damageTaken: {
-            Bug: 2,
+            Blood: 1,
+			Bug: 2,
             Cosmic: 0,
             Crystal: 1,
             Dark: 2,
@@ -393,13 +394,13 @@ const TypeChart = {
             Steel: 1,
             Stellar: 0,
             Water: 0,
-            Wind: 0,
-            Blood: 1
+            Wind: 0
         }
     },
     fighting: {
         damageTaken: {
-            Bug: 2,
+            Blood: 0,
+			Bug: 2,
             Cosmic: 0,
             Crystal: 2,
             Dark: 2,
@@ -429,15 +430,15 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 0,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         },
         inherit: true
     },
     fire: {
         damageTaken: {
             brn: 3,
-            Bug: 2,
+            Blood: 1,
+			Bug: 2,
             Cosmic: 1,
             Crystal: 1,
             Dark: 0,
@@ -467,14 +468,14 @@ const TypeChart = {
             Steel: 2,
             Stellar: 0,
             Water: 1,
-            Wind: 2,
-            Blood: 1
+            Wind: 2
         },
         inherit: true
     },
     flying: {
         damageTaken: {
-            Bug: 2,
+            Blood: 0,
+			Bug: 2,
             Cosmic: 0,
             Crystal: 0,
             Dark: 0,
@@ -504,8 +505,7 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 0,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         },
         inherit: true
     },
@@ -513,7 +513,8 @@ const TypeChart = {
         damageTaken: {
             cursedwinds: 3,
             trapped: 3,
-            Bug: 2,
+            Blood: 0,
+			Bug: 2,
             Cosmic: 0,
             Crystal: 0,
             Dark: 1,
@@ -543,15 +544,15 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 0,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         },
         inherit: true
     },
     grass: {
         damageTaken: {
             powder: 3,
-            Bug: 1,
+            Blood: 0,
+			Bug: 1,
             Cosmic: 0,
             Crystal: 0,
             Dark: 0,
@@ -581,8 +582,7 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 2,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         },
         inherit: true
     },
@@ -590,7 +590,8 @@ const TypeChart = {
         damageTaken: {
             sandstorm: 3,
             thunderstorm: 3,
-            Bug: 0,
+            Blood: 1,
+			Bug: 0,
             Cosmic: 2,
             Crystal: 2,
             Dark: 0,
@@ -620,8 +621,7 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 1,
-            Wind: 1,
-            Blood: 1
+            Wind: 1
         },
         inherit: true
     },
@@ -629,7 +629,8 @@ const TypeChart = {
         damageTaken: {
             hail: 3,
             frz: 3,
-            Bug: 0,
+            Blood: 0,
+			Bug: 0,
             Cosmic: 2,
             Crystal: 0,
             Dark: 0,
@@ -659,14 +660,14 @@ const TypeChart = {
             Steel: 1,
             Stellar: 0,
             Water: 0,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         },
         inherit: true
     },
     light: {
         damageTaken: {
-            Bug: 0,
+            Blood: 0,
+			Bug: 0,
             Cosmic: 0,
             Crystal: 1,
             Dark: 1,
@@ -695,14 +696,14 @@ const TypeChart = {
             Steel: 1,
             Stellar: 0,
             Water: 0,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         },
     },
     normal: {
         damageTaken: {
             cursedwinds: 3,
-            Bug: 0,
+            Blood: 0,
+			Bug: 0,
             Cosmic: 0,
             Crystal: 0,
             Dark: 0,
@@ -732,14 +733,14 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 0,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         },
     },
     nuclear: {
         damageTaken: {
             fallout: 3,
-            Bug: 0,
+            Blood: 0,
+			Bug: 0,
             Cosmic: 0,
             Crystal: 0,
             Dark: 0,
@@ -769,13 +770,13 @@ const TypeChart = {
             Steel: 1,
             Stellar: 0,
             Water: 1,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         },
     },
     plastic: {
         damageTaken: {
-            Bug: 0,
+            Blood: 0,
+			Bug: 0,
             Cosmic: 0,
             Crystal: 0,
             Dark: 0,
@@ -805,8 +806,7 @@ const TypeChart = {
             Steel: 1,
             Stellar: 0,
             Water: 0,
-            Wind: 2,
-            Blood: 0
+            Wind: 2
         }
     },
     poison: {
@@ -814,7 +814,8 @@ const TypeChart = {
             psn: 3,
             tox: 3,
             acidrain: 3,
-            Bug: 2,
+            Blood: 0,
+			Bug: 2,
             Cosmic: 0,
             Crystal: 2,
             Dark: 0,
@@ -844,14 +845,14 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 0,
-            Wind: 1,
-            Blood: 0
+            Wind: 1
         },
         inherit: true
     },
     psychic: {
         damageTaken: {
-            Bug: 1,
+            Blood: 0,
+			Bug: 1,
             Cosmic: 2,
             Crystal: 0,
             Dark: 1,
@@ -881,14 +882,14 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 0,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         },
         inherit: true
     },
     questionmark: {
         damageTaken: {
-            Bug: 0,
+            Blood: 0,
+			Bug: 0,
             Cosmic: 0,
             Crystal: 0,
             Dark: 0,
@@ -918,14 +919,14 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 0,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         },
     },
     rock: {
         damageTaken: {
             sandstorm: 3,
-            Bug: 0,
+            Blood: 1,
+			Bug: 0,
             Cosmic: 0,
             Crystal: 2,
             Dark: 0,
@@ -955,15 +956,15 @@ const TypeChart = {
             Steel: 1,
             Stellar: 0,
             Water: 1,
-            Wind: 0,
-            Blood: 1
+            Wind: 0
         },
         inherit: true
     },
     shadow: {
         damageTaken: {
             shadowyaura: 3,
-            Bug: 1,
+            Blood: 0,
+			Bug: 1,
             Cosmic: 1,
             Crystal: 0,
             Dark: 1,
@@ -993,13 +994,13 @@ const TypeChart = {
             Steel: 1,
             Stellar: 0,
             Water: 1,
-            Wind: 1,
-            Blood: 0
+            Wind: 1
         }
     },
     slime: {
         damageTaken: {
-            Bug: 2,
+            Blood: 0,
+			Bug: 2,
             Cosmic: 0,
             Crystal: 0,
             Dark: 0,
@@ -1029,13 +1030,13 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 2,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         },
     },
     sound: {
         damageTaken: {
-            Bug: 0,
+            Blood: 0,
+			Bug: 0,
             Cosmic: 1,
             Crystal: 0,
             Dark: 0,
@@ -1065,8 +1066,7 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 2,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         },
     },
     steel: {
@@ -1077,7 +1077,8 @@ const TypeChart = {
             fallout: 3,
             hail: 3,
             sandstorm: 3,
-            Bug: 2,
+            Blood: 0,
+			Bug: 2,
             Cosmic: 1,
             Crystal: 0,
             Dark: 0,
@@ -1107,14 +1108,14 @@ const TypeChart = {
             Steel: 2,
             Stellar: 0,
             Water: 0,
-            Wind: 2,
-            Blood: 0
+            Wind: 2
         },
         inherit: true
     },
     stellar: {
         damageTaken: {
-            Bug: 0,
+            Blood: 0,
+			Bug: 0,
             Cosmic: 0,
             Crystal: 0,
             Dark: 0,
@@ -1144,14 +1145,14 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 0,
-            Wind: 0,
-            Blood: 0
+            Wind: 0
         },
     },
     water: {
         damageTaken: {
             acidrain: 3,
-            Bug: 0,
+            Blood: 1,
+			Bug: 0,
             Cosmic: 0,
             Crystal: 0,
             Dark: 0,
@@ -1181,14 +1182,14 @@ const TypeChart = {
             Steel: 2,
             Stellar: 0,
             Water: 2,
-            Wind: 0,
-            Blood: 1
+            Wind: 0
         },
         inherit: true
     },
     wind: {
         damageTaken: {
-            Bug: 0,
+            Blood: 0,
+			Bug: 0,
             Cosmic: 0,
             Crystal: 0,
             Dark: 0,
@@ -1218,8 +1219,7 @@ const TypeChart = {
             Steel: 0,
             Stellar: 0,
             Water: 0,
-            Wind: 2,
-            Blood: 0
+            Wind: 2
         }
     }
 };

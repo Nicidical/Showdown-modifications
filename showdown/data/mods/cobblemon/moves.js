@@ -874,6 +874,22 @@ const Moves = {
     zMove: { boost: { spa: 1 } },
     contestType: "Cute"
   },
+  bassdropfinale: {
+    num: 3725,
+    accuracy: true,
+    basePower: 1,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Bass Drop Finale",
+    pp: 1,
+    priority: 0,
+    flags: {},
+    isZ: "resoniumz",
+    secondary: null,
+    target: "normal",
+    type: "Sound",
+    contestType: "Cool"
+  },
   batteringram: {
     num: 3027,
     accuracy: 100,
@@ -2085,6 +2101,22 @@ const Moves = {
     target: "normal",
     type: "Crystal"
   },
+  codeoverload: {
+    num: 3717,
+    accuracy: true,
+    basePower: 1,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Code Overload",
+    pp: 1,
+    priority: 0,
+    flags: {},
+    isZ: "digitiumz",
+    secondary: null,
+    target: "normal",
+    type: "Digital",
+    contestType: "Cool"
+  },
   collisioncourse: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, legendary: 1 }
@@ -2377,6 +2409,22 @@ const Moves = {
     type: "Water",
     contestType: "Beautiful"
   },
+  coredetonation: {
+    num: 3720,
+    accuracy: true,
+    basePower: 1,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Core Detonation",
+    pp: 1,
+    priority: 0,
+    flags: {},
+    isZ: "nucleariumz",
+    secondary: null,
+    target: "normal",
+    type: "Nuclear",
+    contestType: "Cool"
+  },
   coreenforcer: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1 }
@@ -2627,6 +2675,22 @@ const Moves = {
     target: "normal",
     type: "Ice",
     contestType: "Tough"
+  },
+  crimsonpact: {
+    num: 3727,
+    accuracy: true,
+    basePower: 1,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Crimson Pact",
+    pp: 1,
+    priority: 0,
+    flags: {},
+    isZ: "sanguiniumz",
+    secondary: null,
+    target: "normal",
+    type: "Blood",
+    contestType: "Cool"
   },
   criticalerror: {
     num: 3640,
@@ -3990,6 +4054,22 @@ const Moves = {
     target: "self",
     type: "Cosmic",
     contestType: "Beautiful",
+  },
+  divinenova: {
+    num: 3719,
+    accuracy: true,
+    basePower: 1,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Divine Nova",
+    pp: 1,
+    priority: 0,
+    flags: {},
+    isZ: "luxiumz",
+    secondary: null,
+    target: "normal",
+    type: "Light",
+    contestType: "Cool"
   },
   doomdesire: {
     inherit: true,
@@ -6893,6 +6973,22 @@ const Moves = {
     inherit: true,
 	flags: { protect: 1, mirror: 1, bypasssub: 1, allyanim: 1, legendary: 1 }
   },
+  heavensgale: {
+    num: 3726,
+    accuracy: true,
+    basePower: 1,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Heaven’s Gale",
+    pp: 1,
+    priority: 0,
+    flags: {},
+    isZ: "aeriumz",
+    secondary: null,
+    target: "normal",
+    type: "Wind",
+    contestType: "Cool"
+  },
   heavensknuckle: {
     num: 3605,
     accuracy: 85,
@@ -8173,105 +8269,8 @@ const Moves = {
     target: "normal",
     type: "Plastic"
   },
-  
-  maxfallout: {
-    num: 5555,
-    accuracy: true,
-    basePower: 10,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Max Fallout",
-    pp: 10,
-    priority: 0,
-    flags: {},
-    isMax: true,
-    self: {
-      onHit(source) {
-        if (!source.volatiles["dynamax"])
-          return;
-        for (const pokemon of source.foes()) {
-          this.boost({ spe: -1 }, pokemon);
-        }
-      }
-    },
-    target: "adjacentFoe",
-    type: "Fallout",
-    contestType: "Cool"
-  },
-  maxgalaxy: {
-    num: 5556,
-    accuracy: true,
-    basePower: 10,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Max Galaxy",
-    pp: 10,
-    priority: 0,
-    flags: {},
-    isMax: true,
-    self: {
-      onHit(source) {
-        if (!source.volatiles["dynamax"])
-          return;
-        for (const pokemon of source.foes()) {
-          this.boost({ spe: -1 }, pokemon);
-        }
-      }
-    },
-    target: "adjacentFoe",
-    type: "Cosmic",
-    contestType: "Cool"
-  },
-  maxshatterstorm: {
-    num: 5557,
-    accuracy: true,
-    basePower: 10,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Max Shatterstorm",
-    pp: 10,
-    priority: 0,
-    flags: {},
-    isMax: true,
-    self: {
-      onHit(source) {
-        if (!source.volatiles["dynamax"])
-          return;
-        for (const pokemon of source.foes()) {
-          this.boost({ spe: -1 }, pokemon);
-        }
-      }
-    },
-    target: "adjacentFoe",
-    type: "Crystal",
-    contestType: "Cool"
-  },
-  maxoverclock: {
-    num: 5558,
-    accuracy: true,
-    basePower: 10,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Max Overclock",
-    pp: 10,
-    priority: 0,
-    flags: {},
-    isMax: true,
-    self: {
-      onHit(source) {
-        if (!source.volatiles["dynamax"])
-          return;
-        for (const pokemon of source.foes()) {
-          this.boost({ spe: -1 }, pokemon);
-        }
-      }
-    },
-    target: "adjacentFoe",
-    type: "Digital",
-    contestType: "Cool"
-  },
   maxdreadvoid: {
-    num: 5559,
+    num: 3704,
     accuracy: true,
     basePower: 10,
     category: "Physical",
@@ -8294,13 +8293,13 @@ const Moves = {
     type: "Eldritch",
     contestType: "Cool"
   },
-  maxradiance: {
-    num: 5560,
+  maxgalaxy: {
+    num: 3701,
     accuracy: true,
     basePower: 10,
     category: "Physical",
     isNonstandard: "Past",
-    name: "Max Radiance",
+    name: "Max Galaxy",
     pp: 10,
     priority: 0,
     flags: {},
@@ -8315,179 +8314,11 @@ const Moves = {
       }
     },
     target: "adjacentFoe",
-    type: "Light",
-    contestType: "Cool"
-  },
-  maxmeltdown: {
-    num: 5561,
-    accuracy: true,
-    basePower: 10,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Max Meltdown",
-    pp: 10,
-    priority: 0,
-    flags: {},
-    isMax: true,
-    self: {
-      onHit(source) {
-        if (!source.volatiles["dynamax"])
-          return;
-        for (const pokemon of source.foes()) {
-          this.boost({ spe: -1 }, pokemon);
-        }
-      }
-    },
-    target: "adjacentFoe",
-    type: "Nuclear",
-    contestType: "Cool"
-  },
-  maxrecast: {
-    num: 5562,
-    accuracy: true,
-    basePower: 10,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Max Recast",
-    pp: 10,
-    priority: 0,
-    flags: {},
-    isMax: true,
-    self: {
-      onHit(source) {
-        if (!source.volatiles["dynamax"])
-          return;
-        for (const pokemon of source.foes()) {
-          this.boost({ spe: -1 }, pokemon);
-        }
-      }
-    },
-    target: "adjacentFoe",
-    type: "Plastic",
-    contestType: "Cool"
-  },
-  maxsquestionmark: {
-    num: 5563,
-    accuracy: true,
-    basePower: 10,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Max ???",
-    pp: 10,
-    priority: 0,
-    flags: {},
-    isMax: true,
-    self: {
-      onHit(source) {
-        if (!source.volatiles["dynamax"])
-          return;
-        for (const pokemon of source.foes()) {
-          this.boost({ spe: -1 }, pokemon);
-        }
-      }
-    },
-    target: "adjacentFoe",
-    type: "Questionmark",
-    contestType: "Cool"
-  },
-  maxumbrage: {
-    num: 5564,
-    accuracy: true,
-    basePower: 10,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Max Umbrage",
-    pp: 10,
-    priority: 0,
-    flags: {},
-    isMax: true,
-    self: {
-      onHit(source) {
-        if (!source.volatiles["dynamax"])
-          return;
-        for (const pokemon of source.foes()) {
-          this.boost({ spe: -1 }, pokemon);
-        }
-      }
-    },
-    target: "adjacentFoe",
-    type: "Shadow",
-    contestType: "Cool"
-  },
-  maxoozeflood: {
-    num: 5565,
-    accuracy: true,
-    basePower: 10,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Max Ooze Flood",
-    pp: 10,
-    priority: 0,
-    flags: {},
-    isMax: true,
-    self: {
-      onHit(source) {
-        if (!source.volatiles["dynamax"])
-          return;
-        for (const pokemon of source.foes()) {
-          this.boost({ spe: -1 }, pokemon);
-        }
-      }
-    },
-    target: "adjacentFoe",
-    type: "Slime",
-    contestType: "Cool"
-  },
-  maxreverb: {
-    num: 5566,
-    accuracy: true,
-    basePower: 10,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Max Reverb",
-    pp: 10,
-    priority: 0,
-    flags: {},
-    isMax: true,
-    self: {
-      onHit(source) {
-        if (!source.volatiles["dynamax"])
-          return;
-        for (const pokemon of source.foes()) {
-          this.boost({ spe: -1 }, pokemon);
-        }
-      }
-    },
-    target: "adjacentFoe",
-    type: "Sound",
-    contestType: "Cool"
-  },
-  maxtempest: {
-    num: 5567,
-    accuracy: true,
-    basePower: 10,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Max Tempest",
-    pp: 10,
-    priority: 0,
-    flags: {},
-    isMax: true,
-    self: {
-      onHit(source) {
-        if (!source.volatiles["dynamax"])
-          return;
-        for (const pokemon of source.foes()) {
-          this.boost({ spe: -1 }, pokemon);
-        }
-      }
-    },
-    target: "adjacentFoe",
-    type: "Wind",
+    type: "Cosmic",
     contestType: "Cool"
   },
   maxleechrush: {
-    num: 5568,
+    num: 3713,
     accuracy: true,
     basePower: 10,
     category: "Physical",
@@ -8510,231 +8341,246 @@ const Moves = {
     type: "Blood",
     contestType: "Cool"
   },
-  atomicapocalypse: {
-    num: 5569,
+  maxmeltdown: {
+    num: 3706,
     accuracy: true,
-    basePower: 1,
+    basePower: 10,
     category: "Physical",
     isNonstandard: "Past",
-    name: "Atomic Apocalypse",
-    pp: 1,
+    name: "Max Meltdown",
+    pp: 10,
     priority: 0,
     flags: {},
-    isZ: "falloutiumz",
-    secondary: null,
-    target: "normal",
-    type: "Fallout",
-    contestType: "Cool"
-  },
-  supernovaimplosion: {
-    num: 5570,
-    accuracy: true,
-    basePower: 1,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Supernova Implosion",
-    pp: 1,
-    priority: 0,
-    flags: {},
-    isZ: "cosmiumz",
-    secondary: null,
-    target: "normal",
-    type: "Cosmic",
-    contestType: "Cool"
-  },
-  prismbreakerbeam: {
-    num: 5571,
-    accuracy: true,
-    basePower: 1,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Prism Breaker Beam",
-    pp: 1,
-    priority: 0,
-    flags: {},
-    isZ: "crystalloniumz",
-    secondary: null,
-    target: "normal",
-    type: "Crystal",
-    contestType: "Cool"
-  },
-  codeoverload: {
-    num: 5572,
-    accuracy: true,
-    basePower: 1,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Code Overload",
-    pp: 1,
-    priority: 0,
-    flags: {},
-    isZ: "digitiumz",
-    secondary: null,
-    target: "normal",
-    type: "Digital",
-    contestType: "Cool"
-  },
-  whispersbeyondtheveil: {
-    num: 5573,
-    accuracy: true,
-    basePower: 1,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Whispers Beyond the Veil",
-    pp: 1,
-    priority: 0,
-    flags: {},
-    isZ: "eldrichiumz",
-    secondary: null,
-    target: "normal",
-    type: "Eldritch",
-    contestType: "Cool"
-  },
-  divinenova: {
-    num: 5574,
-    accuracy: true,
-    basePower: 1,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Divine Nova",
-    pp: 1,
-    priority: 0,
-    flags: {},
-    isZ: "luxiumz",
-    secondary: null,
-    target: "normal",
-    type: "Light",
-    contestType: "Cool"
-  },
-  coredetonation: {
-    num: 5575,
-    accuracy: true,
-    basePower: 1,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Core Detonation",
-    pp: 1,
-    priority: 0,
-    flags: {},
-    isZ: "nucleariumz",
-    secondary: null,
-    target: "normal",
+    isMax: true,
+    self: {
+      onHit(source) {
+        if (!source.volatiles["dynamax"])
+          return;
+        for (const pokemon of source.foes()) {
+          this.boost({ spe: -1 }, pokemon);
+        }
+      }
+    },
+    target: "adjacentFoe",
     type: "Nuclear",
     contestType: "Cool"
   },
-  syntheticevolution: {
-    num: 5576,
+  maxoozeflood: {
+    num: 3710,
     accuracy: true,
-    basePower: 1,
+    basePower: 10,
     category: "Physical",
     isNonstandard: "Past",
-    name: "Synthetic Evolution",
-    pp: 1,
+    name: "Max Ooze Flood",
+    pp: 10,
     priority: 0,
     flags: {},
-    isZ: "plasticinez",
-    secondary: null,
-    target: "normal",
-    type: "Plastic",
-    contestType: "Cool"
-  },
-  questionmarkprotocol: {
-    num: 5577,
-    accuracy: true,
-    basePower: 1,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "??? Protocol",
-    pp: 1,
-    priority: 0,
-    flags: {},
-    isZ: "questionmarkz",
-    secondary: null,
-    target: "normal",
-    type: "Questionmark",
-    contestType: "Cool"
-  },
-  veilofoblivion: {
-    num: 5578,
-    accuracy: true,
-    basePower: 1,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Veil of Oblivion",
-    pp: 1,
-    priority: 0,
-    flags: {},
-    isZ: "umbriumz",
-    secondary: null,
-    target: "normal",
-    type: "Shadow",
-    contestType: "Cool"
-  },
-  mucustsunami: {
-    num: 5579,
-    accuracy: true,
-    basePower: 1,
-    category: "Physical",
-    isNonstandard: "Past",
-    name: "Mucus Tsunami",
-    pp: 1,
-    priority: 0,
-    flags: {},
-    isZ: "visciumz",
-    secondary: null,
-    target: "normal",
+    isMax: true,
+    self: {
+      onHit(source) {
+        if (!source.volatiles["dynamax"])
+          return;
+        for (const pokemon of source.foes()) {
+          this.boost({ spe: -1 }, pokemon);
+        }
+      }
+    },
+    target: "adjacentFoe",
     type: "Slime",
     contestType: "Cool"
   },
-  bassdropfinale: {
-    num: 5580,
+  maxoverclock: {
+    num: 3703,
     accuracy: true,
-    basePower: 1,
+    basePower: 10,
     category: "Physical",
     isNonstandard: "Past",
-    name: "Bass Drop Finale",
-    pp: 1,
+    name: "Max Overclock",
+    pp: 10,
     priority: 0,
     flags: {},
-    isZ: "resoniumz",
-    secondary: null,
-    target: "normal",
+    isMax: true,
+    self: {
+      onHit(source) {
+        if (!source.volatiles["dynamax"])
+          return;
+        for (const pokemon of source.foes()) {
+          this.boost({ spe: -1 }, pokemon);
+        }
+      }
+    },
+    target: "adjacentFoe",
+    type: "Digital",
+    contestType: "Cool"
+  },
+  maxsquestionmark: {
+    num: 3708,
+    accuracy: true,
+    basePower: 10,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Max Questionmark",
+    pp: 10,
+    priority: 0,
+    flags: {},
+    isMax: true,
+    self: {
+      onHit(source) {
+        if (!source.volatiles["dynamax"])
+          return;
+        for (const pokemon of source.foes()) {
+          this.boost({ spe: -1 }, pokemon);
+        }
+      }
+    },
+    target: "adjacentFoe",
+    type: "Questionmark",
+    contestType: "Cool"
+  },
+  maxradiance: {
+    num: 3705,
+    accuracy: true,
+    basePower: 10,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Max Radiance",
+    pp: 10,
+    priority: 0,
+    flags: {},
+    isMax: true,
+    self: {
+      onHit(source) {
+        if (!source.volatiles["dynamax"])
+          return;
+        for (const pokemon of source.foes()) {
+          this.boost({ spe: -1 }, pokemon);
+        }
+      }
+    },
+    target: "adjacentFoe",
+    type: "Light",
+    contestType: "Cool"
+  },
+  maxrecast: {
+    num: 3707,
+    accuracy: true,
+    basePower: 10,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Max Recast",
+    pp: 10,
+    priority: 0,
+    flags: {},
+    isMax: true,
+    self: {
+      onHit(source) {
+        if (!source.volatiles["dynamax"])
+          return;
+        for (const pokemon of source.foes()) {
+          this.boost({ spe: -1 }, pokemon);
+        }
+      }
+    },
+    target: "adjacentFoe",
+    type: "Plastic",
+    contestType: "Cool"
+  },
+  maxreverb: {
+    num: 3711,
+    accuracy: true,
+    basePower: 10,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Max Reverb",
+    pp: 10,
+    priority: 0,
+    flags: {},
+    isMax: true,
+    self: {
+      onHit(source) {
+        if (!source.volatiles["dynamax"])
+          return;
+        for (const pokemon of source.foes()) {
+          this.boost({ spe: -1 }, pokemon);
+        }
+      }
+    },
+    target: "adjacentFoe",
     type: "Sound",
     contestType: "Cool"
   },
-  heavensgale: {
-    num: 5581,
+  maxshatterstorm: {
+    num: 3702,
     accuracy: true,
-    basePower: 1,
+    basePower: 10,
     category: "Physical",
     isNonstandard: "Past",
-    name: "Heaven’s Gale",
-    pp: 1,
+    name: "Max Shatterstorm",
+    pp: 10,
     priority: 0,
     flags: {},
-    isZ: "aeriumz",
-    secondary: null,
-    target: "normal",
+    isMax: true,
+    self: {
+      onHit(source) {
+        if (!source.volatiles["dynamax"])
+          return;
+        for (const pokemon of source.foes()) {
+          this.boost({ spe: -1 }, pokemon);
+        }
+      }
+    },
+    target: "adjacentFoe",
+    type: "Crystal",
+    contestType: "Cool"
+  },
+  maxtempest: {
+    num: 3712,
+    accuracy: true,
+    basePower: 10,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Max Tempest",
+    pp: 10,
+    priority: 0,
+    flags: {},
+    isMax: true,
+    self: {
+      onHit(source) {
+        if (!source.volatiles["dynamax"])
+          return;
+        for (const pokemon of source.foes()) {
+          this.boost({ spe: -1 }, pokemon);
+        }
+      }
+    },
+    target: "adjacentFoe",
     type: "Wind",
     contestType: "Cool"
   },
-  crimsonpact: {
-    num: 5582,
+  maxumbrage: {
+    num: 3709,
     accuracy: true,
-    basePower: 1,
+    basePower: 10,
     category: "Physical",
     isNonstandard: "Past",
-    name: "Crimson Pact",
-    pp: 1,
+    name: "Max Umbrage",
+    pp: 10,
     priority: 0,
     flags: {},
-    isZ: "sanguiniumz",
-    secondary: null,
-    target: "normal",
-    type: "Blood",
+    isMax: true,
+    self: {
+      onHit(source) {
+        if (!source.volatiles["dynamax"])
+          return;
+        for (const pokemon of source.foes()) {
+          this.boost({ spe: -1 }, pokemon);
+        }
+      }
+    },
+    target: "adjacentFoe",
+    type: "Shadow",
     contestType: "Cool"
   },
-  
   megabyte: {
     num: 3658,
     accuracy: 100,
@@ -9452,6 +9298,22 @@ const Moves = {
     target: "normal",
     type: "Dark",
     contestType: "Tough"
+  },
+  mucustsunami: {
+    num: 3724,
+    accuracy: true,
+    basePower: 1,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Mucus Tsunami",
+    pp: 1,
+    priority: 0,
+    flags: {},
+    isZ: "visciumz",
+    secondary: null,
+    target: "normal",
+    type: "Slime",
+    contestType: "Cool"
   },
   mudslide: {
     num: 3266,
@@ -10709,6 +10571,22 @@ const Moves = {
     type: "Psychic",
     contestType: "Cool"
   },
+  prismbreakerbeam: {
+    num: 3716,
+    accuracy: true,
+    basePower: 1,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Prism Breaker Beam",
+    pp: 1,
+    priority: 0,
+    flags: {},
+    isZ: "crystalloniumz",
+    secondary: null,
+    target: "normal",
+    type: "Crystal",
+    contestType: "Cool"
+  },
   prismpunch: {
     num: 3573,
     accuracy: 100,
@@ -10935,6 +10813,22 @@ const Moves = {
     secondary: null,
     target: "normal",
     type: "Nuclear",
+    contestType: "Cool"
+  },
+  questionmarkprotocol: {
+    num: 3722,
+    accuracy: true,
+    basePower: 1,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Questionmark Protocol",
+    pp: 1,
+    priority: 0,
+    flags: {},
+    isZ: "questionmarkiumz",
+    secondary: null,
+    target: "normal",
+    type: "Questionmark",
     contestType: "Cool"
   },
   quickattack: {
@@ -13988,6 +13882,22 @@ const Moves = {
     type: "Cosmic",
     contestType: "Beautiful"
   },
+  supernovaimplosion: {
+    num: 3715,
+    accuracy: true,
+    basePower: 1,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Supernova Implosion",
+    pp: 1,
+    priority: 0,
+    flags: {},
+    isZ: "cosmiumz",
+    secondary: null,
+    target: "normal",
+    type: "Cosmic",
+    contestType: "Cool"
+  },
   supersonicsound: {
     num: 3410,
     accuracy: 55,
@@ -14195,6 +14105,22 @@ const Moves = {
     type: "Grass",
     zMove: { effect: "clearnegativeboost" },
     contestType: "Clever"
+  },
+  syntheticevolution: {
+    num: 3721,
+    accuracy: true,
+    basePower: 1,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Synthetic Evolution",
+    pp: 1,
+    priority: 0,
+    flags: {},
+    isZ: "plasticinez",
+    secondary: null,
+    target: "normal",
+    type: "Plastic",
+    contestType: "Cool"
   },
   syntheticsurge: {
     num: 3651,
@@ -14479,20 +14405,6 @@ const Moves = {
   thundercage: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, legendary: 1 }
-  },
-  thunderclap: {
-    num: 3424,
-    accuracy: 100,
-    basePower: 40,
-    category: "Physical",
-    name: "Thunderclap",
-    pp: 30,
-    priority: 1,
-    flags: { contact: 1, protect: 1, mirror: 1, speed: 1, legendary: 1 },
-    secondary: null,
-    target: "normal",
-    type: "Electric",
-    contestType: "Clever"
   },
   thundercrush: {
     num: 3425,
@@ -15077,6 +14989,22 @@ const Moves = {
     zMove: { boost: { spe: 1 } },
     contestType: "Beautiful"
   },
+  veilofoblivion: {
+    num: 3723,
+    accuracy: true,
+    basePower: 1,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Veil of Oblivion",
+    pp: 1,
+    priority: 0,
+    flags: {},
+    isZ: "umbriumz",
+    secondary: null,
+    target: "normal",
+    type: "Shadow",
+    contestType: "Cool"
+  },
   velvetscales: {
     num: 3441,
     accuracy: true,
@@ -15476,6 +15404,22 @@ const Moves = {
     target: "normal",
     type: "Water",
     contestType: "Cute"
+  },
+  whispersbeyondtheveil: {
+    num: 3718,
+    accuracy: true,
+    basePower: 1,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Whispers Beyond the Veil",
+    pp: 1,
+    priority: 0,
+    flags: {},
+    isZ: "eldrichiumz",
+    secondary: null,
+    target: "normal",
+    type: "Eldritch",
+    contestType: "Cool"
   },
   whirlpool: {
     inherit: true,
