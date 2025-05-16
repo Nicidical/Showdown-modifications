@@ -14262,7 +14262,6 @@ const Moves = {
 	onHit(target, source) {
       // Clear weather conditions
       this.field.clearWeather();
-      this.add("-fieldstart", "move: Tempest", "[of] " + source);
     },
     secondary: null,
     target: "normal",
