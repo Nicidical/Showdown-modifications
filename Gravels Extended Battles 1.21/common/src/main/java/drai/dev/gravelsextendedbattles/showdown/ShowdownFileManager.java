@@ -53,6 +53,11 @@ public class ShowdownFileManager {
         }
         try {
             ShowdownFileManager.exportResource(showdownFolder.replaceAll("data/mods/cobblemon/","sim/"), "battle-actions.js");
+            ShowdownFileManager.exportResource(showdownFolder.replaceAll("data/mods/cobblemon/","sim/"), "pokemon.js");
+            ShowdownFileManager.exportResource(showdownFolder.replaceAll("data/mods/cobblemon/","server/chat-commands/"), "info.js");
+            ShowdownFileManager.exportResource(showdownFolder.replaceAll("data/mods/cobblemon/","server/chat-plugins/"), "datasearch.js");
+            ShowdownFileManager.exportResource(showdownFolder.replaceAll("data/mods/cobblemon/","data/text/"), "default.js");
+            ShowdownFileManager.exportResource(showdownFolder.replaceAll("data/mods/cobblemon/","config/"), "formats.js");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

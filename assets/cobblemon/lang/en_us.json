@@ -1397,6 +1397,8 @@
   "cobblemon.move.condensate.desc": "The user condensates the target, turning them into a different type.",
   "cobblemon.move.solidificate": "Solidificate",
   "cobblemon.move.solidificate.desc": "The user solidifies the target, turning them into a different type.",
+  "cobblemon.move.icecoldtouch": "Ice-Cold Touch",
+  "cobblemon.move.icecoldtouch.desc": "The user touches the target with its cold skin to inflict frostbite.",
   "cobblemon.move.maxgalaxy": "Max Galaxy",
   "cobblemon.move.maxgalaxy.desc": "This is a Cosmic-type attack Dynamax Pokémon use. This lowers the target's Speed stat.",
   "cobblemon.move.maxshatterstorm": "Max Shatterstorm",
@@ -1468,6 +1470,13 @@
   
   "cobblemon.battle.end.magmaring": "%1$s was freed from Magma Ring!",
   "cobblemon.battle.end.parasiticfungi": "%1$s was cured from Parasitic Fungi!",
+  
+  "cobblemon.ui.status.fbt": "FBT",
+  "cobblemon.battle.fail.fbt": "But %1$s is already frostbitten!",
+  "cobblemon.battle.damage.fbt": "%1$s was hurt by frostbite!",
+  "cobblemon.status.frostbite.apply": "%1$s was frostbitten!",
+  "cobblemon.status.frostbite.hurt": "%1$s was hurt by its frostbite!",
+  "cobblemon.status.frostbite.cure": "%1$s was cured of its frostbite!",
   
   "cobblemon.battle.weather.acidrain.start": "It started to rain acid!",
   "cobblemon.battle.weather.acidrain.upkeep": "Acid continues to fall.",

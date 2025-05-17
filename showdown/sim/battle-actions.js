@@ -1742,6 +1742,11 @@ class BattleActions {
         baseDamage = this.battle.modify(baseDamage, 0.5);
       }
     }
+	if (pokemon.status === "fbt" && move.category === "Special" && !pokemon.hasAbility("guts")) {
+      if (this.battle.gen < 6 || move.id !== "facade") {
+        baseDamage = this.battle.modify(baseDamage, 0.5);
+      }
+    }
     if (this.battle.gen === 5 && !baseDamage)
       baseDamage = 1;
     baseDamage = this.battle.runEvent("ModifyDamage", pokemon, target, move, baseDamage);

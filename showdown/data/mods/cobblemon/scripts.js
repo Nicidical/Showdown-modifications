@@ -22,6 +22,32 @@ __export(scripts_exports, {
 });
 module.exports = __toCommonJS(scripts_exports);
 const Scripts = {
-  inherit: "base"
+  inherit: "base",
+  getEffectiveness(move, target) {
+    // Initialize effectiveness at 1x (neutral)
+    let effectiveness = 1;
+    const targetTypes = target.types;
+
+    for (const type of targetTypes) {
+        let typeMod = this.dex.getEffectiveness(move.type, type);
+
+        // Custom rule for Shadow type moves
+        if (move.type === "Shadow") {
+            if (type === "Questionmark" || type === "Crystal") {
+                typeMod = 0; // Neutral damage to Questionmark and Crystal
+            } else if (type === "Light" || type === "Eldritch") {
+                typeMod = 2; // Reduced damage to Light and Eldritch
+            } else {
+                typeMod = 1; // Always apply a single 2x multiplier, regardless of dual types
+            }
+        }
+
+        // Apply type modification for each target type
+        effectiveness *= Math.pow(2, typeMod);
+    }
+
+    // Return effectiveness clamped to either 0.5 (resisted), 1 (neutral), or 2 (super-effective)
+    return Math.min(effectiveness, 2);
+  }
 };
 //# sourceMappingURL=scripts.js.map

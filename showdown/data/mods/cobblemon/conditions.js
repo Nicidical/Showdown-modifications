@@ -22,6 +22,24 @@ __export(conditions_exports, {
 });
 module.exports = __toCommonJS(conditions_exports);
 const Conditions = {
+  fbt: {
+    name: "fbt",
+    effectType: "Status",
+    onStart(target, source, sourceEffect) {
+      if (sourceEffect && sourceEffect.id === "frostbiteorb") {
+        this.add("-status", target, "fbt", "[from] item: Frostbite Orb");
+      } else if (sourceEffect && sourceEffect.effectType === "Ability") {
+        this.add("-status", target, "fbt", "[from] ability: " + sourceEffect.name, "[of] " + source);
+      } else {
+        this.add("-status", target, "fbt");
+      }
+    },
+    // Damage reduction is handled directly in the sim/battle.js damage function
+    onResidualOrder: 10,
+    onResidual(pokemon) {
+      this.damage(pokemon.baseMaxhp / 16);
+    }
+  },
   acidrain: {
     name: "AcidRain",
     effectType: "Weather",

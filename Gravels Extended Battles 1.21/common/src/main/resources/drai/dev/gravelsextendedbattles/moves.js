@@ -7364,6 +7364,22 @@ const Moves = {
     inherit: true,
 	flags: { charge: 1, protect: 1, mirror: 1, nosleeptalk: 1, failinstruct: 1, legendary: 1 }
   },
+  icecoldtouch: {
+    num: 3699,
+    accuracy: 85,
+    basePower: 0,
+    category: "Status",
+    name: "Ice-Cold Touch",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, reflectable: 1, mirror: 1 },
+    status: "fbt",
+    secondary: null,
+    target: "normal",
+    type: "ice",
+    zMove: { boost: { spa: 1 } },
+    contestType: "Beautiful"
+  },
   iceentomb: {
     num: 3677,
     accuracy: 40,
