@@ -95,7 +95,10 @@ public class SpeciesManager {
         if(species == null) return true;
         var pokemon = PokemonSpecies.INSTANCE.getByName(species);
         if(pokemon == null) return true;
-        return containsBannedLabels(pokemon.getForm(Set.of(form == null ? "" : form)).getLabels().stream().toList());
+
+        var forms = new HashSet<String>();
+        if(form != null) forms.addAll(List.of(form.split(" ")));
+        return containsBannedLabels(pokemon.getForm(forms).getLabels().stream().toList());
     }
 
     public static boolean containsBannedLabels(List<String> labels) {

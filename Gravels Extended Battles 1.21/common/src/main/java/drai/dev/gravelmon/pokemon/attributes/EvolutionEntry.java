@@ -10,6 +10,7 @@ public class EvolutionEntry {
     String shedder;
     EvolutionType kind;
     boolean consumesHeldItem = false;
+    boolean optional = true;
     private List<MoveLearnSetEntry> moves;
     private List<EvolutionRequirementEntry> requirements;
     private List<Aspect> aspects = new ArrayList<>();
@@ -215,5 +216,18 @@ public class EvolutionEntry {
 
     public void setShedder(String s) {
         this.shedder = s;
+    }
+
+    public boolean isOptional() {
+        return optional;
+    }
+
+    public void setOptional(boolean optional) {
+        this.optional = optional;
+    }
+
+    public EvolutionEntry notOptional() {
+        this.optional = false;
+        return this;
     }
 }

@@ -119,7 +119,7 @@ public enum Label {
     public static Map<Label, String> passwordProtectedLabels;
     static{
         passwordProtectedLabels = new HashMap<>();
-        if(false){
+        if(true){
             passwordProtectedLabels.put(OTTORA, "15thaddictionIsAddicted");
             passwordProtectedLabels.put(IONOS, "airikr4283");
             passwordProtectedLabels.put(MASTENIA, "airikr4283");
