@@ -28,6 +28,8 @@ const Items = {
     onTakeItem: false,
     zMove: true,
     zMoveType: "Wind",
+	onPlate: "Wind",
+    forcedForme: "Arceus-Wind",
     num: 3094,
     gen: 7,
     isNonstandard: "Past"
@@ -46,6 +48,37 @@ const Items = {
     itemUser: ["Terubim"],
     num: 3016,
     gen: 8,
+    isNonstandard: "Past"
+  },
+  bloodgem: {
+    name: "Blood Gem",
+    spritenum: 3121,
+    isGem: true,
+    onSourceTryPrimaryHit(target, source, move) {
+      if (target === source || move.category === "Status")
+        return;
+      if (move.type === "Blood" && source.useItem()) {
+        source.addVolatile("gem");
+      }
+    },
+    num: 3121,
+    gen: 5,
+    isNonstandard: "Past"
+  },
+  bloodmemory: {
+    name: "Blood Memory",
+    spritenum: 3134,
+    onMemory: "Blood",
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 773 || pokemon.baseSpecies.num === 773) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Silvally-Blood",
+    itemUser: ["Silvally-Blood"],
+    num: 3134,
+    gen: 7,
     isNonstandard: "Past"
   },
   boltorb: {
@@ -87,12 +120,45 @@ const Items = {
     gen: 9,
     isNonstandard: "Past"
   },
+  cosmicgem: {
+    name: "Cosmic Gem",
+    spritenum: 3111,
+    isGem: true,
+    onSourceTryPrimaryHit(target, source, move) {
+      if (target === source || move.category === "Status")
+        return;
+      if (move.type === "Cosmic" && source.useItem()) {
+        source.addVolatile("gem");
+      }
+    },
+    num: 3111,
+    gen: 5,
+    isNonstandard: "Past"
+  },
+  cosmicmemory: {
+    name: "Cosmic Memory",
+    spritenum: 3124,
+    onMemory: "Cosmic",
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 773 || pokemon.baseSpecies.num === 773) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Silvally-Cosmic",
+    itemUser: ["Silvally-Cosmic"],
+    num: 3124,
+    gen: 7,
+    isNonstandard: "Past"
+  },
   cosmiumz: {
     name: "Cosmium Z",
     spritenum: 3083,
     onTakeItem: false,
     zMove: true,
     zMoveType: "Cosmic",
+	onPlate: "Cosmic",
+    forcedForme: "Arceus-Cosmic",
     num: 3083,
     gen: 7,
     isNonstandard: "Past"
@@ -114,15 +180,88 @@ const Items = {
     num: 3002,
     gen: 2
   },
+  cpuplate: {
+    name: "CPU Plate",
+    spritenum: 3100,
+    onPlate: "Digital",
+    onBasePowerPriority: 15,
+    onBasePower(basePower, user, target, move) {
+      if (move.type === "Digital") {
+        return this.chainModify([4915, 4096]);
+      }
+    },
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 493 || pokemon.baseSpecies.num === 493) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Arceus-Digital",
+    num: 3100,
+    gen: 4
+  },
+  crystalgem: {
+    name: "Cosmic Gem",
+    spritenum: 3112,
+    isGem: true,
+    onSourceTryPrimaryHit(target, source, move) {
+      if (target === source || move.category === "Status")
+        return;
+      if (move.type === "Crystal" && source.useItem()) {
+        source.addVolatile("gem");
+      }
+    },
+    num: 3112,
+    gen: 5,
+    isNonstandard: "Past"
+  },
   crystalloniumz: {
     name: "Crystallonium Z",
     spritenum: 3084,
     onTakeItem: false,
     zMove: true,
     zMoveType: "Crystal",
+	onPlate: "Crystal",
+    forcedForme: "Arceus-Crystal",
     num: 3084,
     gen: 7,
     isNonstandard: "Past"
+  },
+  crystalmemory: {
+    name: "Crystal Memory",
+    spritenum: 3125,
+    onMemory: "Crystal",
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 773 || pokemon.baseSpecies.num === 773) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Silvally-Crystal",
+    itemUser: ["Silvally-Crystal"],
+    num: 3125,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  crystalplate: {
+    name: "Crystal Plate",
+    spritenum: 3099,
+    onPlate: "Crystal",
+    onBasePowerPriority: 15,
+    onBasePower(basePower, user, target, move) {
+      if (move.type === "Crystal") {
+        return this.chainModify([4915, 4096]);
+      }
+    },
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 493 || pokemon.baseSpecies.num === 493) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Arceus-Crystal",
+    num: 3099,
+    gen: 4
   },
   cursedsash: {
     name: "Cursed Sash",
@@ -140,6 +279,26 @@ const Items = {
       }
 	},
     num: 3018,
+    gen: 4
+  },
+  cycloneplate: {
+    name: "Cyclone Plate",
+    spritenum: 3106,
+    onPlate: "Wind",
+    onBasePowerPriority: 15,
+    onBasePower(basePower, user, target, move) {
+      if (move.type === "Wind") {
+        return this.chainModify([4915, 4096]);
+      }
+    },
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 493 || pokemon.baseSpecies.num === 493) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Arceus-Wind",
+    num: 3106,
     gen: 4
   },
   darkrock: {
@@ -168,12 +327,45 @@ const Items = {
     num: 3026,
     gen: 8
   },
+  digitalgem: {
+    name: "Digital Gem",
+    spritenum: 3113,
+    isGem: true,
+    onSourceTryPrimaryHit(target, source, move) {
+      if (target === source || move.category === "Status")
+        return;
+      if (move.type === "Digital" && source.useItem()) {
+        source.addVolatile("gem");
+      }
+    },
+    num: 3113,
+    gen: 5,
+    isNonstandard: "Past"
+  },
+  digitalmemory: {
+    name: "Digital Memory",
+    spritenum: 3126,
+    onMemory: "Digital",
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 773 || pokemon.baseSpecies.num === 773) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Silvally-Digital",
+    itemUser: ["Silvally-Digital"],
+    num: 3126,
+    gen: 7,
+    isNonstandard: "Past"
+  },
   digitiumz: {
     name: "Digitium Z",
     spritenum: 3085,
     onTakeItem: false,
     zMove: true,
     zMoveType: "Digital",
+	onPlate: "Ditial",
+    forcedForme: "Arceus-Digital",
     num: 3085,
     gen: 7,
     isNonstandard: "Past"
@@ -184,7 +376,40 @@ const Items = {
     onTakeItem: false,
     zMove: true,
     zMoveType: "Eldritch",
+	onPlate: "Eldritch",
+    forcedForme: "Arceus-Eldritch",
     num: 3086,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  eldritchgem: {
+    name: "Eldritch Gem",
+    spritenum: 3120,
+    isGem: true,
+    onSourceTryPrimaryHit(target, source, move) {
+      if (target === source || move.category === "Status")
+        return;
+      if (move.type === "Eldritch" && source.useItem()) {
+        source.addVolatile("gem");
+      }
+    },
+    num: 3120,
+    gen: 5,
+    isNonstandard: "Past"
+  },
+  eldritchmemory: {
+    name: "Eldritch Memory",
+    spritenum: 3133,
+    onMemory: "Eldritch",
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 773 || pokemon.baseSpecies.num === 773) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Silvally-Eldritch",
+    itemUser: ["Silvally-Eldritch"],
+    num: 3133,
     gen: 7,
     isNonstandard: "Past"
   },
@@ -203,15 +428,25 @@ const Items = {
     num: 3004,
     gen: 5
   },
-  falloutiumz: {
-    name: "Falloutium Z",
-    spritenum: 3082,
-    onTakeItem: false,
-    zMove: true,
-    zMoveType: "Fallout",
-    num: 3082,
-    gen: 7,
-    isNonstandard: "Past"
+  fissionplate: {
+    name: "Fission Plate",
+    spritenum: 3102,
+    onPlate: "Nuclear",
+    onBasePowerPriority: 15,
+    onBasePower(basePower, user, target, move) {
+      if (move.type === "Nuclear") {
+        return this.chainModify([4915, 4096]);
+      }
+    },
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 493 || pokemon.baseSpecies.num === 493) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Arceus-Nuclear",
+    num: 3102,
+    gen: 4
   },
   flygonarmor: {
     name: "Flygon Armor",
@@ -250,6 +485,46 @@ const Items = {
       basePower: 60
     },
     num: 3005,
+    gen: 4
+  },
+  galacticplate: {
+    name: "Galactic Plate",
+    spritenum: 3098,
+    onPlate: "Cosmic",
+    onBasePowerPriority: 15,
+    onBasePower(basePower, user, target, move) {
+      if (move.type === "Cosmic") {
+        return this.chainModify([4915, 4096]);
+      }
+    },
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 493 || pokemon.baseSpecies.num === 493) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Arceus-Cosmic",
+    num: 3098,
+    gen: 4
+  },
+  gunkplate: {
+    name: "Gunk Plate",
+    spritenum: 3104,
+    onPlate: "Slime",
+    onBasePowerPriority: 15,
+    onBasePower(basePower, user, target, move) {
+      if (move.type === "Slime") {
+        return this.chainModify([4915, 4096]);
+      }
+    },
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 493 || pokemon.baseSpecies.num === 493) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Arceus-Slime",
+    num: 3104,
     gen: 4
   },
   hafliberry: {
@@ -305,6 +580,26 @@ const Items = {
     num: 3007,
     gen: 2
   },
+  ichorplate: {
+    name: "Ichor Plate",
+    spritenum: 3108,
+    onPlate: "Blood",
+    onBasePowerPriority: 15,
+    onBasePower(basePower, user, target, move) {
+      if (move.type === "Blood") {
+        return this.chainModify([4915, 4096]);
+      }
+    },
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 493 || pokemon.baseSpecies.num === 493) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Arceus-Blood",
+    num: 3108,
+    gen: 4
+  },
   iveolite: {
     name: "Iveolite",
     spritenum: 3008,
@@ -326,6 +621,37 @@ const Items = {
     num: 3008,
     gen: 5
   },
+  lightgem: {
+    name: "Light Gem",
+    spritenum: 3114,
+    isGem: true,
+    onSourceTryPrimaryHit(target, source, move) {
+      if (target === source || move.category === "Status")
+        return;
+      if (move.type === "Light" && source.useItem()) {
+        source.addVolatile("gem");
+      }
+    },
+    num: 3114,
+    gen: 5,
+    isNonstandard: "Past"
+  },
+  lightmemory: {
+    name: "Light Memory",
+    spritenum: 3127,
+    onMemory: "Light",
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 773 || pokemon.baseSpecies.num === 773) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Silvally-Light",
+    itemUser: ["Silvally-Light"],
+    num: 3127,
+    gen: 7,
+    isNonstandard: "Past"
+  },
   longclub: {
     name: "Long Club",
     fling: {
@@ -342,12 +668,34 @@ const Items = {
     gen: 9,
     isNonstandard: "Past"
   },
+  lumenplate: {
+    name: "Lumen Plate",
+    spritenum: 3101,
+    onPlate: "Light",
+    onBasePowerPriority: 15,
+    onBasePower(basePower, user, target, move) {
+      if (move.type === "Light") {
+        return this.chainModify([4915, 4096]);
+      }
+    },
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 493 || pokemon.baseSpecies.num === 493) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Arceus-Light",
+    num: 3101,
+    gen: 4
+  },
   luxiumz: {
     name: "Luxium Z",
     spritenum: 3087,
     onTakeItem: false,
     zMove: true,
     zMoveType: "Light",
+	onPlate: "Light",
+    forcedForme: "Arceus-Light",
     num: 3087,
     gen: 7,
     isNonstandard: "Past"
@@ -381,14 +729,82 @@ const Items = {
     num: 3010,
     gen: 2
   },
+  nucleargem: {
+    name: "Nuclear Gem",
+    spritenum: 3115,
+    isGem: true,
+    onSourceTryPrimaryHit(target, source, move) {
+      if (target === source || move.category === "Status")
+        return;
+      if (move.type === "Nuclear" && source.useItem()) {
+        source.addVolatile("gem");
+      }
+    },
+    num: 3115,
+    gen: 5,
+    isNonstandard: "Past"
+  },
   nucleariumz: {
     name: "Nuclearium Z",
     spritenum: 3088,
     onTakeItem: false,
     zMove: true,
     zMoveType: "Nuclear",
+	onPlate: "Nuclear",
+    forcedForme: "Arceus-Nuclear",
     num: 3088,
     gen: 7,
+    isNonstandard: "Past"
+  },
+  nuclearmemory: {
+    name: "Nuclear Memory",
+    spritenum: 3128,
+    onMemory: "Nuclear",
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 773 || pokemon.baseSpecies.num === 773) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Silvally-Nuclear",
+    itemUser: ["Silvally-Nuclear"],
+    num: 3128,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  penumbraplate: {
+    name: "Penumbra Plate",
+    spritenum: 3096,
+    onPlate: "Shadow",
+    onBasePowerPriority: 15,
+    onBasePower(basePower, user, target, move) {
+      if (move.type === "Shadow") {
+        return this.chainModify([4915, 4096]);
+      }
+    },
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 493 || pokemon.baseSpecies.num === 493) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Arceus-Shadow",
+    num: 3096,
+    gen: 4
+  },
+  plasticgem: {
+    name: "Plastic Gem",
+    spritenum: 3116,
+    isGem: true,
+    onSourceTryPrimaryHit(target, source, move) {
+      if (target === source || move.category === "Status")
+        return;
+      if (move.type === "Plastic" && source.useItem()) {
+        source.addVolatile("gem");
+      }
+    },
+    num: 3116,
+    gen: 5,
     isNonstandard: "Past"
   },
   plasticinez: {
@@ -397,7 +813,25 @@ const Items = {
     onTakeItem: false,
     zMove: true,
     zMoveType: "Plastic",
+	onPlate: "Plastic",
+    forcedForme: "Arceus-Plastic",
     num: 3089,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  plasticmemory: {
+    name: "Plastic Memory",
+    spritenum: 3129,
+    onMemory: "Plastic",
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 773 || pokemon.baseSpecies.num === 773) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Silvally-Plastic",
+    itemUser: ["Silvally-Plastic"],
+    num: 3129,
     gen: 7,
     isNonstandard: "Past"
   },
@@ -423,6 +857,26 @@ const Items = {
     num: 3013,
     gen: 3
   },
+  polymerplate: {
+    name: "Polymer Plate",
+    spritenum: 3103,
+    onPlate: "Plastic",
+    onBasePowerPriority: 15,
+    onBasePower(basePower, user, target, move) {
+      if (move.type === "Plastic") {
+        return this.chainModify([4915, 4096]);
+      }
+    },
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 493 || pokemon.baseSpecies.num === 493) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Arceus-Plastic",
+    num: 3103,
+    gen: 4
+  },
   prettyribbon: {
     name: "Pretty Ribbon",
     spritenum: 3011,
@@ -438,15 +892,68 @@ const Items = {
     num: 3011,
     gen: 2
   },
+  questionmarkgem: {
+    name: "Questionmark Gem",
+    spritenum: 3110,
+    isGem: true,
+    onSourceTryPrimaryHit(target, source, move) {
+      if (target === source || move.category === "Status")
+        return;
+      if (move.type === "Questionmark" && source.useItem()) {
+        source.addVolatile("gem");
+      }
+    },
+    num: 3110,
+    gen: 5,
+    isNonstandard: "Past"
+  },
   questionmarkiumz: {
     name: "Questionmarkium Z",
     spritenum: 3090,
     onTakeItem: false,
     zMove: true,
     zMoveType: "Questionmark",
+	onPlate: "Questionmark",
+    forcedForme: "Arceus-Questionmark",
     num: 3090,
     gen: 7,
     isNonstandard: "Past"
+  },
+  questionmarkmemory: {
+    name: "Questionmark Memory",
+    spritenum: 3123,
+    onMemory: "Questionmark",
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 773 || pokemon.baseSpecies.num === 773) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Silvally-Questionmark",
+    itemUser: ["Silvally-Questionmark"],
+    num: 3123,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  questionmarkplate: {
+    name: "Questionmark Plate",
+    spritenum: 3097,
+    onPlate: "Questionmark",
+    onBasePowerPriority: 15,
+    onBasePower(basePower, user, target, move) {
+      if (move.type === "Questionmark") {
+        return this.chainModify([4915, 4096]);
+      }
+    },
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 493 || pokemon.baseSpecies.num === 493) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Arceus-Questionmark",
+    num: 3097,
+    gen: 4
   },
   raggedpebble: {
     name: "Ragged Pebble",
@@ -476,6 +983,8 @@ const Items = {
     onTakeItem: false,
     zMove: true,
     zMoveType: "Sound",
+	onPlate: "Sound",
+    forcedForme: "Arceus-Sound",
     num: 3093,
     gen: 7,
     isNonstandard: "Past"
@@ -486,7 +995,122 @@ const Items = {
     onTakeItem: false,
     zMove: true,
     zMoveType: "Blood",
+	onPlate: "Blood",
+    forcedForme: "Arceus-Blood",
     num: 3095,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  shadowgem: {
+    name: "Shadow Gem",
+    spritenum: 3109,
+    isGem: true,
+    onSourceTryPrimaryHit(target, source, move) {
+      if (target === source || move.category === "Status")
+        return;
+      if (move.type === "Shadow" && source.useItem()) {
+        source.addVolatile("gem");
+      }
+    },
+    num: 3109,
+    gen: 5,
+    isNonstandard: "Past"
+  },
+  shadowmemory: {
+    name: "Shadow Memory",
+    spritenum: 3122,
+    onMemory: "Shadow",
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 773 || pokemon.baseSpecies.num === 773) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Silvally-Shadow",
+    itemUser: ["Silvally-Shadow"],
+    num: 3122,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  sheetplate: {
+    name: "Sheet Plate",
+    spritenum: 3105,
+    onPlate: "Sound",
+    onBasePowerPriority: 15,
+    onBasePower(basePower, user, target, move) {
+      if (move.type === "Sound") {
+        return this.chainModify([4915, 4096]);
+      }
+    },
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 493 || pokemon.baseSpecies.num === 493) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Arceus-Sound",
+    num: 3105,
+    gen: 4
+  },
+  slimegem: {
+    name: "Slime Gem",
+    spritenum: 3117,
+    isGem: true,
+    onSourceTryPrimaryHit(target, source, move) {
+      if (target === source || move.category === "Status")
+        return;
+      if (move.type === "Slime" && source.useItem()) {
+        source.addVolatile("gem");
+      }
+    },
+    num: 3117,
+    gen: 5,
+    isNonstandard: "Past"
+  },
+  slimememory: {
+    name: "Slime Memory",
+    spritenum: 3130,
+    onMemory: "Slime",
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 773 || pokemon.baseSpecies.num === 773) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Silvally-Slime",
+    itemUser: ["Silvally-Slime"],
+    num: 3130,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  soundgem: {
+    name: "Sound Gem",
+    spritenum: 3118,
+    isGem: true,
+    onSourceTryPrimaryHit(target, source, move) {
+      if (target === source || move.category === "Status")
+        return;
+      if (move.type === "Sound" && source.useItem()) {
+        source.addVolatile("gem");
+      }
+    },
+    num: 3118,
+    gen: 5,
+    isNonstandard: "Past"
+  },
+  soundmemory: {
+    name: "Sound Memory",
+    spritenum: 3131,
+    onMemory: "Sound",
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 773 || pokemon.baseSpecies.num === 773) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Silvally-Sound",
+    itemUser: ["Silvally-Sound"],
+    num: 3131,
     gen: 7,
     isNonstandard: "Past"
   },
@@ -565,9 +1189,31 @@ const Items = {
     onTakeItem: false,
     zMove: true,
     zMoveType: "Shadow",
+	onPlate: "Shadow",
+    forcedForme: "Arceus-Shadow",
     num: 3091,
     gen: 7,
     isNonstandard: "Past"
+  },
+  unearthlyplate: {
+    name: "Unearthly Plate",
+    spritenum: 3107,
+    onPlate: "Eldritch",
+    onBasePowerPriority: 15,
+    onBasePower(basePower, user, target, move) {
+      if (move.type === "Eldritch") {
+        return this.chainModify([4915, 4096]);
+      }
+    },
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 493 || pokemon.baseSpecies.num === 493) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Arceus-Eldritch",
+    num: 3107,
+    gen: 4
   },
   visciumz: {
     name: "Viscium Z",
@@ -575,7 +1221,40 @@ const Items = {
     onTakeItem: false,
     zMove: true,
     zMoveType: "Slime",
+	onPlate: "Slime",
+    forcedForme: "Arceus-Slime",
     num: 3092,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  windgem: {
+    name: "Wind Gem",
+    spritenum: 3119,
+    isGem: true,
+    onSourceTryPrimaryHit(target, source, move) {
+      if (target === source || move.category === "Status")
+        return;
+      if (move.type === "Wind" && source.useItem()) {
+        source.addVolatile("gem");
+      }
+    },
+    num: 3119,
+    gen: 5,
+    isNonstandard: "Past"
+  },
+  windmemory: {
+    name: "Wind Memory",
+    spritenum: 3132,
+    onMemory: "Wind",
+    onTakeItem(item, pokemon, source) {
+      if (source && source.baseSpecies.num === 773 || pokemon.baseSpecies.num === 773) {
+        return false;
+      }
+      return true;
+    },
+    forcedForme: "Silvally-Wind",
+    itemUser: ["Silvally-Wind"],
+    num: 3132,
     gen: 7,
     isNonstandard: "Past"
   },
