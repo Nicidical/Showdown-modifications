@@ -52,7 +52,7 @@ const Moves = {
     name: "Ace's Play",
     pp: 15,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     overrideOffensivePokemon: "target",
     secondary: null,
     target: "normal",
@@ -219,6 +219,56 @@ const Moves = {
     zMove: { effect: "heal" },
     contestType: "Cool"
   },
+  amalgamate: {
+    num: 3736,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    isNonstandard: "Past",
+    name: "Amalgamate",
+    pp: 1,
+    noPPBoosts: true,
+    priority: 0,
+    flags: {
+      bypasssub: 1,
+      allyanim: 1,
+      failencore: 1,
+      nosleeptalk: 1,
+      noassist: 1,
+      failcopycat: 1,
+      failinstruct: 1,
+      failmimic: 1
+    },
+    onHit(target, source) {
+      const disallowedMoves = ["chatter", "sketch", "replicate", "copypaste", "amalgamate", "struggle"];
+      const move = target.lastMove;
+      if (source.transformed || !move || source.moves.includes(move.id))
+        return false;
+      if (disallowedMoves.includes(move.id) || move.isZ || move.isMax)
+        return false;
+      const sketchIndex = source.moves.indexOf("sketch");
+      if (sketchIndex < 0)
+        return false;
+      const sketchedMove = {
+        move: move.name,
+        id: move.id,
+        pp: move.pp,
+        maxpp: move.pp,
+        target: move.target,
+        disabled: false,
+        used: false
+      };
+      source.moveSlots[sketchIndex] = sketchedMove;
+      source.baseMoveSlots[sketchIndex] = sketchedMove;
+      this.add("-activate", source, "move: Amalgamate", move.name);
+    },
+    noSketch: true,
+    secondary: null,
+    target: "normal",
+    type: "Blood",
+    zMove: { boost: { atk: 1, def: 1, spa: 1, spd: 1, spe: 1 } },
+    contestType: "Clever"
+  },
   amethystassault: {
     num: 3653,
     accuracy: 95,
@@ -275,7 +325,7 @@ const Moves = {
     name: "Ancient Roar",
     pp: 15,
     priority: 0,
-    flags: { sound: 1, bypasssub: 1, protect: 1, mirror: 1 },
+    flags: { sound: 1, bypasssub: 1, protect: 1, mirror: 1, magic: 1 },
 	secondary: null,
     target: "normal",
     type: "Rock",
@@ -289,7 +339,7 @@ const Moves = {
     name: "Ancient Roar Sound",
     pp: 15,
     priority: 0,
-    flags: { sound: 1, bypasssub: 1, protect: 1, mirror: 1 },
+    flags: { sound: 1, bypasssub: 1, protect: 1, mirror: 1, magic: 1 },
     onModifyType(move, pokemon, target) {
       const rockTypeEffectiveness = target.runEffectiveness(move);
       move.type = "Sound";
@@ -307,6 +357,10 @@ const Moves = {
     target: "normal",
     type: "Rock",
     contestType: "Tough"
+  },
+  ancientpower: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, metronome: 1, magic: 1 }
   },
   antivirusnet: {
     num: 3008,
@@ -378,7 +432,7 @@ const Moves = {
     name: "Arcean Banish",
     pp: 5,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, magic: 1 },
     ohko: true,
     secondary: null,
     target: "normal",
@@ -386,6 +440,23 @@ const Moves = {
     zMove: { basePower: 180 },
     maxMove: { basePower: 130 },
     contestType: "Cool"
+  },
+  arcticbreeze: {
+    num: 3700,
+    accuracy: 100,
+    basePower: 80,
+    category: "Special",
+    name: "Arctic Breeze",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1 },
+    secondary: {
+      chance: 30,
+      status: "fbt"
+    },
+    target: "normal",
+    type: "Wind",
+    contestType: "Tough"
   },
   aromawind: {
     num: 3664,
@@ -507,7 +578,7 @@ const Moves = {
     name: "Astroforce",
     pp: 5,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     secondary: {
       chance: 10,
       self: {
@@ -532,7 +603,7 @@ const Moves = {
     name: "Astroforce Cosmic",
     pp: 5,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     secondary: {
       chance: 10,
       self: {
@@ -731,6 +802,10 @@ const Moves = {
     zMove: { boost: { spe: 1 } },
     contestType: "Beautiful"
   },
+  aurasphere: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, distance: 1, metronome: 1, bullet: 1, pulse: 1, magic: 1 }
+  },
   aurorabeam: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, beam: 1 }
@@ -792,7 +867,7 @@ const Moves = {
     name: "Banishing Fist",
     pp: 5,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1, punch: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1, magic: 1 },
     critRatio: 2,
     secondary: null,
     target: "normal",
@@ -807,7 +882,7 @@ const Moves = {
     name: "Banshee's Scream",
     pp: 5,
     priority: 0,
-    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1, magic: 1 },
     secondary: {
       chance: 35,
       volatileStatus: "perishsong"
@@ -833,6 +908,10 @@ const Moves = {
     type: "Poison",
     contestType: "Tough"
   },
+  barrier: {
+    inherit: true,
+	flags: { snatch: 1, metronome: 1, magic: 1 }
+  },
   barrierlight: {
     num: 3025,
     accuracy: true,
@@ -842,7 +921,7 @@ const Moves = {
     name: "Barrier Light",
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: { snatch: 1, magic: 1 },
     boosts: {
       def: 2
     },
@@ -860,7 +939,7 @@ const Moves = {
     name: "Basilisk's Glare",
     pp: 20,
     priority: 0,
-    flags: { protect: 1, reflectable: 1, mirror: 1, allyanim: 1 },
+    flags: { protect: 1, reflectable: 1, mirror: 1, allyanim: 1, magic: 1 },
     onHit(target) {
       if (target.getTypes().join() === "Rock" || !target.setType("Rock")) {
         this.add("-fail", target);
@@ -1108,6 +1187,67 @@ const Moves = {
     type: "Light",
     contestType: "Tough"
   },
+  blisteringshield: {
+    num: 3742,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Blistering Shield",
+    pp: 10,
+    priority: 4,
+    flags: { noassist: 1, failcopycat: 1 },
+    stallingMove: true,
+    volatileStatus: "blisteringshield",
+    onPrepareHit(pokemon) {
+      return !!this.queue.willAct() && this.runEvent("StallMove", pokemon);
+    },
+    onHit(pokemon) {
+      pokemon.addVolatile("stall");
+    },
+	condition: {
+      duration: 1,
+      onStart(target) {
+        this.add("-singleturn", target, "move: Protect");
+      },
+      onTryHitPriority: 3,
+      onTryHit(target, source, move) {
+        if (!move.flags["protect"]) {
+          if (["gmaxoneblow", "gmaxrapidflow"].includes(move.id))
+            return;
+          if (move.isZ || move.isMax)
+            target.getMoveHitData(move).zBrokeProtect = true;
+          return;
+        }
+        if (move.smartTarget) {
+          move.smartTarget = false;
+        } else {
+          this.add("-activate", target, "move: Protect");
+        }
+        const lockedmove = source.getVolatile("lockedmove");
+        if (lockedmove) {
+          if (source.volatiles["lockedmove"].duration === 2) {
+            delete source.volatiles["lockedmove"];
+          }
+        }
+        if (this.checkMoveMakesContact(move, source, target) && source.hasType("Ice")) {
+          this.damage(source.baseMaxhp / 8, source, target);
+          this.add("-message", "${source.name} was hurt by Blistering Shield due to its Ice typing!");
+        }
+        return this.NOT_FAIL;
+      },
+      onHit(target, source, move) {
+        if (move.isZOrMaxPowered && this.checkMoveMakesContact(move, source, target) && source.hasType("Ice")) {
+          this.damage(source.baseMaxhp / 8, source, target);
+          this.add("-message", "${source.name} was hurt by Blistering Shield due to its Ice typing!");
+        }
+      }
+    },
+    secondary: null,
+    target: "self",
+    type: "Blood",
+    zMove: { boost: { def: 1 } },
+    contestType: "Tough"
+  },
   blitzcannon: {
     num: 3667,
     accuracy: 100,
@@ -1135,6 +1275,58 @@ const Moves = {
     type: "Steel",
     contestType: "Beautiful"
   },
+  bloodblade: {
+    num: 3735,
+    accuracy: 100,
+    basePower: 120,
+    category: "Physical",
+    name: "Blood Blade",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, slicing: 1, magic: 1 },
+    onAfterMoveSecondarySelf(pokemon, target, move) {
+      if (!target || target.fainted || target.hp <= 0) {
+        // Target fainted, heal the user
+        this.heal(pokemon.baseMaxhp / 2, pokemon);
+        this.add("-heal", pokemon, pokemon.getHealth, "[from] move: Blood Blade");
+        return;
+      }
+      // Recoil scenario: calculate 50% recoil
+      const recoilDamage = Math.floor(pokemon.baseMaxhp * 2 / 3);
+      // If recoil would KO the user
+      if (recoilDamage >= pokemon.hp) {
+        // Instead of recoil, heal based on 50% of damage dealt
+        const damageDealt = target.lastDamage || 0;
+        const healingAmount = Math.floor(damageDealt / 2);
+        if (healingAmount > 0) {
+          this.heal(healingAmount, pokemon);
+          this.add("-heal", pokemon, pokemon.getHealth, "[from] move: Blood Blade");
+          // Determine target's highest stat
+          const stats = target.baseStoredStats || target.storedStats || target.stats;
+          if (stats) {
+            const relevantStats = ["atk", "def", "spa", "spd", "spe"];
+            let highestStat = 'atk';
+            let highestValue = -1;
+            for (const stat of relevantStats) {
+              if (stats[stat] > highestValue) {
+                highestStat = stat;
+                highestValue = stats[stat];
+              }
+            }
+            // Boost that stat by 2
+            this.boost({ [highestStat]: 1 }, pokemon);
+          }
+        }
+      } else {
+        // Apply recoil normally
+        this.damage(recoilDamage, pokemon, pokemon, this.dex.conditions.get("recoil"));
+      }
+    },
+    secondary: null,
+    target: "any",
+    type: "Blood",
+    contestType: "Cool"
+  },
   blockblitz: {
     num: 3484,
     accuracy: 70,
@@ -1151,6 +1343,49 @@ const Moves = {
     target: "normal",
     type: "Plastic",
     contestType: "Tough"
+  },
+  bloodletting: {
+    num: 3732,
+    accuracy: 100,
+    basePower: 75,
+    category: "Special",
+    name: "Bloodletting",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, heal: 1, metronome: 1, magic: 1 },
+    drain: [1, 2],
+    secondary: null,
+    target: "normal",
+    type: "Blood",
+    contestType: "Clever"
+  },
+  bloodsigil: {
+    num: 3734,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Blood Sigil",
+    pp: 10,
+    priority: 0,
+    flags: { reflectable: 1, metronome: 1, mustpressure: 1, magic: 1 },
+    sideCondition: "bloodsigil",
+    condition: {
+      onSideStart(side) {
+        this.add("-sidestart", side, "move: Blood Sigil");
+      },
+      onModifyDamage(damage, source, target, move) {
+        if (!source.isAlly(target)) return;
+        if (move.type === "Eldritch" || move.type === "Ghost" || move.type === "Blood" || move.flags["magic"]) {
+          this.debug("Blood Sigil boost");
+          return this.chainModify([4915, 4096]); // ~1.2x = 4915/4096 (~20% boost)
+        }
+      }
+    },
+    secondary: null,
+    target: "allySide",
+    type: "Blood",
+    zMove: { boost: { def: 1 } },
+    contestType: "Cool"
   },
   bloodytriggers: {
     num: 3550,
@@ -1368,7 +1603,7 @@ const Moves = {
     name: "Brain Freeze",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     secondary: {
       chance: 10,
       status: "frz"
@@ -1376,6 +1611,24 @@ const Moves = {
     target: "normal",
     type: "Psychic",
     contestType: "Cool"
+  },
+  brainhemorrhage: {
+    num: 3738,
+    accuracy: 100,
+    basePower: 75,
+    category: "Special",
+    name: "Brain Hemorrhage",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, magic: 1 },
+    secondary: {
+      chance: 100,
+      boosts: {
+        spa: -1
+      }
+    },
+    target: "normal",
+    type: "Blood"
   },
   brainstorm: {
     num: 3040,
@@ -1385,7 +1638,7 @@ const Moves = {
     name: "Brain Storm",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     secondary: {
       chance: 70,
       self: {
@@ -1467,7 +1720,7 @@ const Moves = {
     name: "Bufu",
     pp: 30,
     priority: 0,
-    flags: { protect: 1, mirror: 1, metronome: 1 },
+    flags: { protect: 1, mirror: 1, metronome: 1, magic: 1 },
 	onModifyMove(move) {
       if (this.field.isWeather(["hail", "snow"]))
         move.accuracy = true;
@@ -1487,7 +1740,7 @@ const Moves = {
     name: "Bufula",
     pp: 20,
     priority: 0,
-    flags: { protect: 1, mirror: 1, metronome: 1 },
+    flags: { protect: 1, mirror: 1, metronome: 1, magic: 1 },
 	onModifyMove(move) {
       if (this.field.isWeather(["hail", "snow"]))
         move.accuracy = true;
@@ -1507,7 +1760,7 @@ const Moves = {
     name: "Bufudyne",
     pp: 15,
     priority: 0,
-    flags: { protect: 1, mirror: 1, metronome: 1 },
+    flags: { protect: 1, mirror: 1, metronome: 1, magic: 1 },
 	onModifyMove(move) {
       if (this.field.isWeather(["hail", "snow"]))
         move.accuracy = true;
@@ -1845,7 +2098,7 @@ const Moves = {
     name: "Charming Gnash",
     pp: 25,
     priority: 0,
-    flags: { bite: 1, contact: 1, protect: 1, mirror: 1 },
+    flags: { bite: 1, contact: 1, protect: 1, mirror: 1, magic: 1 },
     secondary: {
       chance: 30,
       volatileStatus: "attract"
@@ -1933,6 +2186,67 @@ const Moves = {
     secondary: null,
     target: "normal",
     type: "Dark"
+  },
+  chimericsynthesis: {
+    num: 3740,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Chimeric Synthesis",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, allyanim: 1 },
+	onHit(target, user) {
+      // Fail if user does not have Blood type
+      if (!user.hasType("Blood")) {
+        this.add("-fail", user, "move: Chimeric Synthesis");
+        return null;
+      }
+
+      const newType = target.getTypes()[0]; // target's primary type
+
+      // Fail if user's type is already the target's type
+      if (user.hasType(newType)) {
+        this.add("-fail", user, "move: Chimeric Synthesis");
+        return null;
+      }
+
+      // Change user type to target's primary type
+      if (!user.setType(newType)) {
+        return false;
+      }
+      this.add("-start", user, "typechange", newType);
+
+      // Determine highest stat of the target (among Atk, SpA, Def, SpD)
+      const targetStats = target.baseStoredStats || target.storedStats || target.stats;
+      if (!targetStats) return;
+
+      const statMap = {
+        atk: "atk",
+        spa: "spa",
+        def: "def",
+        spd: "spd"
+      };
+
+      let highestStat = "atk";
+      let highestValue = -1;
+
+      for (const stat of Object.keys(statMap)) {
+        const val = targetStats[stat];
+        if (val > highestValue) {
+          highestValue = val;
+          highestStat = statMap[stat];
+        }
+      }
+
+      // Boost the user's stat accordingly
+      this.boost({ [highestStat]: 1 }, user);
+    },
+    secondary: null,
+    target: "normal",
+    type: "Blood",
+    zMove: { boost: { spa: 1 } },
+    contestType: "Tough"
   },
   chomper: {
     num: 3060,
@@ -2232,6 +2546,10 @@ const Moves = {
     zMove: { boost: { spd: 1 } },
     contestType: "Beautiful"
   },
+  confusion: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, metronome: 1, magic: 1 }
+  },
   constructionblocks: {
     num: 3066,
     accuracy: true,
@@ -2365,7 +2683,7 @@ const Moves = {
       failmimic: 1
     },
     onHit(target, source) {
-      const disallowedMoves = ["chatter", "sketch", "struggle"];
+      const disallowedMoves = ["chatter", "sketch", "replicate", "copypaste", "amalgamate", "struggle"];
       const move = target.lastMove;
       if (source.transformed || !move || source.moves.includes(move.id))
         return false;
@@ -2534,7 +2852,7 @@ const Moves = {
     name: "Cosmic Rays",
     pp: 5,
     priority: 0,
-    flags: {},
+    flags: { magic: 1 },
     weather: "psychicfield",
     secondary: null,
     target: "all",
@@ -2576,7 +2894,8 @@ const Moves = {
         "gmaxcannonade",
         "gmaxvinelash",
         "gmaxwildfire",
-		"slimetrail"
+		"slimetrail",
+		"bloodsigil"
       ];
       let success = false;
       if (this.gameType === "freeforall") {
@@ -2685,7 +3004,7 @@ const Moves = {
     name: "Crimson Pact",
     pp: 1,
     priority: 0,
-    flags: {},
+    flags: { magic: 1 },
     isZ: "sanguiniumz",
     secondary: null,
     target: "normal",
@@ -2733,7 +3052,7 @@ const Moves = {
     name: "Cry for Peace",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1, pulse: 1 },
+    flags: { protect: 1, mirror: 1, pulse: 1, magic: 1 },
     target: "allAdjacentFoes",
     type: "Fairy",
     contestType: "Beautiful"
@@ -3015,7 +3334,7 @@ const Moves = {
     name: "Dark Bargain",
     pp: 5,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: { snatch: 1, magic: 1  },
 	volatileStatus: "curse",
     boosts: {
       spa: 2,
@@ -3036,7 +3355,7 @@ const Moves = {
     name: "Darkening Bolt",
     pp: 15,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1  },
     secondary: {
       chance: 10,
       boosts: {
@@ -3083,6 +3402,10 @@ const Moves = {
     type: "Poison",
     contestType: "Beautiful"
   },
+  darkpulse: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, distance: 1, metronome: 1, pulse: 1, magic: 1 }
+  },
   darkroar: {
     num: 3086,
     accuracy: 100,
@@ -3091,7 +3414,7 @@ const Moves = {
     name: "Dark Roar",
     pp: 30,
     priority: 1,
-	flags: { protect: 1, mirror: 1, sound: 1, speed: 1 },
+	flags: { protect: 1, mirror: 1, sound: 1, speed: 1, magic: 1  },
     secondary: null,
     target: "normal",
     type: "Dark",
@@ -3118,7 +3441,7 @@ const Moves = {
         move.type = "Sound"
       }
     },
-    flags: { protect: 1, mirror: 1, sound: 1, speed: 1 },
+    flags: { protect: 1, mirror: 1, sound: 1, speed: 1, magic: 1  },
     secondary: null,
     target: "normal",
     type: "Dark",
@@ -3132,7 +3455,7 @@ const Moves = {
     name: "Dark Shot",
     pp: 15,
     priority: 0,
-    flags: { protect: 1, mirror: 1, distance: 1, pulse: 1 },
+    flags: { protect: 1, mirror: 1, distance: 1, pulse: 1, magic: 1  },
     secondary: null,
     target: "normal",
     type: "Ghost",
@@ -3146,7 +3469,7 @@ const Moves = {
     name: "Dark Whispers",
     pp: 15,
     priority: 0,
-    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1, magic: 1 },
     secondary: null,
     target: "normal",
     type: "Eldritch",
@@ -3214,7 +3537,7 @@ const Moves = {
     name: "Dazzle Dust",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1, powder: 1 },
+    flags: { protect: 1, mirror: 1, powder: 1, magic: 1 },
     secondary: null,
     target: "normal",
     type: "Fairy",
@@ -3366,7 +3689,8 @@ const Moves = {
 		"velvetscales",
         "stickyweb",
         "gmaxsteelsurge",
-		"slimetrail"
+		"slimetrail",
+		"bloodsigil"
       ];
       const removeAll = [
         "constructionblocks",
@@ -3379,7 +3703,8 @@ const Moves = {
 		"velvetscales",
         "stickyweb",
         "gmaxsteelsurge",
-		"slimetrail"
+		"slimetrail",
+		"bloodsigil"
       ];
       for (const targetCondition of removeTarget) {
         if (target.side.removeSideCondition(targetCondition)) {
@@ -3432,7 +3757,8 @@ const Moves = {
 		"velvetscales",
         "stickyweb",
         "gmaxsteelsurge",
-		"slimetrail"
+		"slimetrail",
+		"bloodsigil"
       ];
       const removeAll = [
         "constructionblocks",
@@ -3445,7 +3771,8 @@ const Moves = {
 		"velvetscales",
         "stickyweb",
         "gmaxsteelsurge",
-		"slimetrail"
+		"slimetrail",
+		"bloodsigil"
       ];
       for (const targetCondition of removeTarget) {
         if (target.side.removeSideCondition(targetCondition)) {
@@ -3496,7 +3823,7 @@ const Moves = {
     name: "Deja-Vu",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     secondary: null,
     target: "allAdjacent",
     type: "Psychic",
@@ -3637,7 +3964,7 @@ const Moves = {
     name: "Devillish Favor",
     pp: 20,
     priority: 0,
-    flags: { snatch: 1, dance: 1 },
+    flags: { snatch: 1, dance: 1, magic: 1 },
     boosts: {
       atk: 1,
       spa: 1
@@ -3656,7 +3983,7 @@ const Moves = {
     name: "Devil's Deed",
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: { snatch: 1, magic: 1  },
     boosts: {
       atk: 1,
       spe: 1
@@ -3665,6 +3992,28 @@ const Moves = {
     target: "self",
     type: "Dark",
     zMove: { effect: "clearnegativeboost" },
+    contestType: "Cool"
+  },
+  diablerie: {
+    num: 3733,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Diablerie",
+    pp: 10,
+    priority: 0,
+    flags: { snatch: 1, metronome: 1, magic: 1 },
+    onHit(target) {
+      if (target.hp <= target.maxhp / 2 || target.boosts.atk >= 6 || target.maxhp === 1) {
+        return false;
+      }
+      this.directDamage(target.maxhp / 2);
+      this.boost({ atk: 12 }, target);
+    },
+    secondary: null,
+    target: "self",
+    type: "Blood",
+    zMove: { effect: "heal" },
     contestType: "Cool"
   },
   diamondaxe: {
@@ -3890,6 +4239,10 @@ const Moves = {
     type: "Fighting",
     contestType: "Clever"
   },
+  disarmingvoice: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1, magic: 1 }
+  },
   disarmingvoicesound: {
     num: 3104,
     accuracy: true,
@@ -3898,7 +4251,7 @@ const Moves = {
     name: "Disarming Voice Sound",
     pp: 15,
     priority: 0,
-    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1, magic: 1 },
     onModifyType(move, pokemon, target) {
       const fairyTypeEffectiveness = target.runEffectiveness(move);
       move.type = "Sound";
@@ -4444,7 +4797,7 @@ const Moves = {
     name: "Drain Life",
     pp: 10,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1, heal: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, heal: 1, magic: 1  },
     drain: [1, 2],
     secondary: null,
     target: "normal",
@@ -4506,6 +4859,10 @@ const Moves = {
     target: "normal",
     type: "Dragon",
     contestType: "Tough"
+  },
+  dreameater: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, heal: 1, metronome: 1, magic: 1 }
   },
   dryice: {
     num: 3126,
@@ -4699,6 +5056,10 @@ const Moves = {
     type: "Sound",
     contestType: "Cool"
   },
+  eeriespell: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1, metronome: 1, magic: 1 }
+  },
   eevoboost: {
     num: 3134,
     accuracy: true,
@@ -4749,7 +5110,7 @@ const Moves = {
     name: "Eldritch Blast",
     pp: 15,
     priority: 0,
-    flags: { protect: 1, mirror: 1, beam: 1 },
+    flags: { protect: 1, mirror: 1, beam: 1, magic: 1 },
 	multihit: [1, 4],
     secondary: null,
     target: "normal",
@@ -4764,7 +5125,7 @@ const Moves = {
     name: "Eldritch Invocation",
     pp: 5,
     priority: 0,
-    flags: { recharge: 1, protect: 1, mirror: 1 },
+    flags: { recharge: 1, protect: 1, mirror: 1, magic: 1 },
     self: {
       volatileStatus: "mustrecharge"
     },
@@ -4894,7 +5255,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Engulf", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail", "bloodsigil"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Engulf", "[of] " + pokemon);
@@ -4908,7 +5269,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Engulf", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail", "bloodsigil"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Engulf", "[of] " + pokemon);
@@ -4935,7 +5296,7 @@ const Moves = {
     name: "Eternal Hex",
     pp: 5,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, magic: 1 },
     secondary: {
       chance: 10,
       boosts: {
@@ -5019,7 +5380,7 @@ const Moves = {
     name: "Excalibur",
     pp: 5,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1, magic: 1 },
     secondary: null,
 	onEffectiveness(typeMod, target, type) {
       if (type === "Ghost" || type === "Steel")
@@ -5058,7 +5419,7 @@ const Moves = {
     name: "Exsanguinate",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1, heal: 1, bite: 1 },
+    flags: { protect: 1, mirror: 1, heal: 1, bite: 1, magic: 1 },
     drain: [1, 2],
     secondary: null,
     target: "normal",
@@ -5105,6 +5466,10 @@ const Moves = {
     type: "Nuclear",
     contestType: "Cool"
   },
+  extrasensory: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, metronome: 1, magic: 1 }
+  },
   extremespeed: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
@@ -5134,7 +5499,7 @@ const Moves = {
     name: "Fairy Pledge",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     secondary: null,
     target: "normal",
     type: "Fairy",
@@ -5148,7 +5513,7 @@ const Moves = {
     name: "Fairy Rush",
     pp: 10,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, magic: 1 },
     secondary: {
       chance: 20,
       volatileStatus: "flinch"
@@ -5253,7 +5618,7 @@ const Moves = {
     name: "Fey Hammer",
     pp: 15,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, magic: 1 },
     secondary: null,
     target: "normal",
     type: "Fairy",
@@ -5675,7 +6040,7 @@ const Moves = {
     name: "Flubber Fang",
     pp: 15,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1, bite: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, bite: 1, magic: 1 },
     secondary: {
       chance: 10,
       volatileStatus: "confusion"
@@ -5791,7 +6156,7 @@ const Moves = {
     name: "Focused Ram",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     recoil: [1, 4],
     secondary: null,
     target: "normal",
@@ -5834,7 +6199,7 @@ const Moves = {
   },
   freezingglare: {
     inherit: true,
-	flags: { protect: 1, mirror: 1, legendary: 1 }
+	flags: { protect: 1, mirror: 1, legendary: 1, magic: 1 }
   },
   frostbite: {
     num: 3175,
@@ -5912,6 +6277,22 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Cool"
   },
+  funnel: {
+    num: 3731,
+    accuracy: 100,
+    basePower: 40,
+    category: "Special",
+    name: "Funnel",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, heal: 1, metronome: 1 },
+    drain: [1, 2],
+    secondary: null,
+    target: "normal",
+    type: "Blood",
+    zMove: { basePower: 120 },
+    contestType: "Clever"
+  },
   fusionbolt: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1 }
@@ -5919,6 +6300,10 @@ const Moves = {
   fusionflare: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, defrost: 1, metronome: 1, legendary: 1 }
+  },
+  futuresight: {
+    inherit: true,
+	flags: { allyanim: 1, metronome: 1, futuremove: 1, magic: 1 }
   },
   gaiasfury: {
     num: 3178,
@@ -5928,7 +6313,7 @@ const Moves = {
     name: "Gaia's Fury",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1, nonsky: 1 },
+    flags: { protect: 1, mirror: 1, nonsky: 1, magic: 1 },
     secondary: {
       chance: 100,
       boosts: {
@@ -6313,7 +6698,7 @@ const Moves = {
     name: "Giraternal Grip",
     pp: 10,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, magic: 1 },
     secondary: {
       chance: 50,
       boosts: {
@@ -6997,7 +7382,7 @@ const Moves = {
     name: "Heaven's Knuckle",
     pp: 20,
     priority: 0,
-    flags: { protect: 1, mirror: 1, punch: 1 },
+    flags: { protect: 1, mirror: 1, punch: 1, magic: 1 },
     secondary: null,
     target: "normal",
     type: "Fairy",
@@ -7054,6 +7439,29 @@ const Moves = {
     target: "normal",
     type: "Poison",
     contestType: "Tough"
+  },
+  hemophagefrenzy: {
+    num: 3739,
+    accuracy: 100,
+    basePower: 120,
+    category: "Physical",
+    name: "Hemophage Frenzy",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, failinstruct: 1 },
+    drain: [1, 6],
+	self: {
+      volatileStatus: "lockedmove"
+    },
+    onAfterMove(pokemon) {
+      if (pokemon.volatiles["lockedmove"] && pokemon.volatiles["lockedmove"].duration === 1) {
+        pokemon.removeVolatile("lockedmove");
+      }
+    },
+    secondary: null,
+    target: "randomNormal",
+    type: "Blood",
+    contestType: "Cool"
   },
   highjumpkick: {
     inherit: true,
@@ -7312,7 +7720,7 @@ const Moves = {
     name: "Hypnopulse",
     pp: 25,
     priority: 0,
-    flags: { protect: 1, pulse: 1, mirror: 1 },
+    flags: { protect: 1, pulse: 1, mirror: 1, magic: 1 },
     secondary: {
       chance: 10,
       status: "slp"
@@ -7320,6 +7728,10 @@ const Moves = {
     target: "any",
     type: "Psychic",
     contestType: "Beautiful"
+  },
+  hypnosis: {
+    inherit: true,
+	flags: { protect: 1, reflectable: 1, mirror: 1, metronome: 1, magic: 1 }
   },
   hystericalslap: {
     num: 3220,
@@ -7466,6 +7878,21 @@ const Moves = {
     maxMove: { basePower: 130 },
     contestType: "Cool"
   },
+  imbibe: {
+    num: 3730,
+    accuracy: 100,
+    basePower: 20,
+    category: "Special",
+    name: "Imbibe",
+    pp: 25,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, heal: 1, metronome: 1 },
+    drain: [1, 2],
+    secondary: null,
+    target: "normal",
+    type: "Blood",
+    contestType: "Clever"
+  },
   increasedram: {
     num: 3644,
     accuracy: true,
@@ -7496,7 +7923,7 @@ const Moves = {
       if (type === "Fairy")
         return 1;
     },
-    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1, magic: 1 },
     secondary: {
       chance: 30,
       status: "brn"
@@ -7547,7 +7974,7 @@ const Moves = {
     name: "Instant Crush",
     pp: 10,
     priority: 1,
-    flags: { protect: 1, mirror: 1, speed: 1 },
+    flags: { protect: 1, mirror: 1, speed: 1, magic: 1 },
     secondary: null,
     target: "normal",
     type: "Psychic",
@@ -7750,7 +8177,7 @@ const Moves = {
     name: "Knight's Vow",
     pp: 5,
     priority: 0,
-    flags: { snatch: 1, distance: 1, bypasssub: 1 },
+    flags: { snatch: 1, distance: 1, bypasssub: 1, magic: 1 },
 	self: {
       volatileStatus: "followme",
 	  sideCondition: "luckychant"
@@ -7834,7 +8261,7 @@ const Moves = {
     name: "Latent Power",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     secondary: {
       chance: 100,
       boosts: {
@@ -7971,6 +8398,10 @@ const Moves = {
     inherit: true,
 	flags: { protect: 1, mirror: 1, legendary: 1 }
   },
+  lightscreen: {
+    inherit: true,
+	flags: { snatch: 1, metronome: 1, magic: 1 }
+  },
   lightscreenlight: {
     num: 3239,
     accuracy: true,
@@ -7979,7 +8410,7 @@ const Moves = {
     name: "Light Screen Light",
     pp: 30,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: { snatch: 1, magic: 1 },
     sideCondition: "lightscreen",
     secondary: null,
     target: "allySide",
@@ -8027,7 +8458,7 @@ const Moves = {
     name: "Lovecraftian Maw",
     pp: 20,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1, bite: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, bite: 1, magic: 1 },
     secondary: null,
     target: "normal",
     type: "Eldritch",
@@ -8049,7 +8480,7 @@ const Moves = {
     name: "Lunar Cannon",
     pp: 10,
     priority: 0,
-    flags: { charge: 1, protect: 1, mirror: 1, nosleeptalk: 1, failinstruct: 1, beam: 1 },
+    flags: { charge: 1, protect: 1, mirror: 1, nosleeptalk: 1, failinstruct: 1, beam: 1, magic: 1 },
     onTryMove(attacker, defender, move) {
       if (attacker.removeVolatile(move.id)) {
         return;
@@ -8110,6 +8541,14 @@ const Moves = {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, punch: 1, speed: 1 }
   },
+  magicalleaf: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, metronome: 1, magic: 1 }
+  },
+  magicpowder: {
+    inherit: true,
+	flags: { protect: 1, reflectable: 1, mirror: 1, allyanim: 1, metronome: 1, powder: 1, magic: 1 }
+  },
   magicwall: {
     num: 3242,
     accuracy: true,
@@ -8119,7 +8558,7 @@ const Moves = {
     name: "Magic Wall",
     pp: 15,
     priority: 0,
-    flags: { nonsky: 1 },
+    flags: { nonsky: 1, magic: 1 },
     pseudoWeather: "magicwall",
     condition: {
       duration: 5,
@@ -8294,7 +8733,7 @@ const Moves = {
     name: "Max Dreadvoid",
     pp: 10,
     priority: 0,
-    flags: {},
+    flags: { magic: 1 },
     isMax: true,
     self: {
       onHit(source) {
@@ -8635,6 +9074,20 @@ const Moves = {
     type: "Water",
     contestType: "Cool"
   },
+  magicaltorque: {
+    inherit: true,
+	flags: {
+      protect: 1,
+      failencore: 1,
+      failmefirst: 1,
+      nosleeptalk: 1,
+      noassist: 1,
+      failcopycat: 1,
+      failmimic: 1,
+      failinstruct: 1,
+	  magic: 1
+    }
+  },
   melt: {
     num: 3695,
     accuracy: 100,
@@ -8709,7 +9162,7 @@ const Moves = {
     name: "Mental Anguish",
     pp: 30,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     secondary: {
       chance: 10,
       boosts: {
@@ -8728,7 +9181,7 @@ const Moves = {
     name: "MEsmer Smoke",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, reflectable: 1, mirror: 1 },
+    flags: { protect: 1, reflectable: 1, mirror: 1, magic: 1 },
     status: "slp",
     secondary: null,
     target: "allAdjacent",
@@ -8894,7 +9347,7 @@ const Moves = {
     name: "Mind Blast",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     secondary: {
       chance: 10,
       volatileStatus: "confusion"
@@ -9008,7 +9461,7 @@ const Moves = {
     name: "Miracle Will",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1, allyanim: 1 },
+    flags: { protect: 1, mirror: 1, allyanim: 1, magic: 1 },
     onTryHit(target, source, move) {
       if (source.isAlly(target)) {
         move.basePower = 0;
@@ -9066,6 +9519,10 @@ const Moves = {
     type: "Slime",
     contestType: "Cool"
   },
+  mirrorcoat: {
+    inherit: true,
+	flags: { protect: 1, failmefirst: 1, noassist: 1, magic: 1 }
+  },
   mistball: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, metronome: 1, bullet: 1, legendary: 1 }
@@ -9089,6 +9546,10 @@ const Moves = {
     type: "Plastic",
     contestType: "Tough"
   },
+  moonblast: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, metronome: 1, magic: 1 }
+  },
   moongeistbeam: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, beam: 1, legendary: 1 }
@@ -9101,7 +9562,7 @@ const Moves = {
     name: "Moon Impact",
     pp: 5,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, magic: 1 },
     recoil: [1, 2],
     secondary: null,
     target: "normal",
@@ -9116,7 +9577,7 @@ const Moves = {
     name: "Moonlight",
     pp: 5,
     priority: 0,
-    flags: { snatch: 1, heal: 1 },
+    flags: { snatch: 1, heal: 1, magic: 1 },
     onHit(pokemon) {
       let factor = 0.5;
       switch (pokemon.effectiveWeather()) {
@@ -9169,7 +9630,7 @@ const Moves = {
     name: "Moonrazer",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     secondary: {
       chance: 10,
       status: "slp"
@@ -9242,7 +9703,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Mortal Spin", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail", "bloodsigil"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Mortal Spin", "[of] " + pokemon);
@@ -9256,7 +9717,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Mortal Spin", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail", "bloodsigil"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Mortal Spin", "[of] " + pokemon);
@@ -9369,9 +9830,13 @@ const Moves = {
     type: "Steel",
     contestType: "Beautiful"
   },
+  mysticalfire: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, metronome: 1, magic: 1 }
+  },
   mysticalpower: {
     inherit: true,
-	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1 }
+	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1, magic: 1 }
   },
   mysticchant: {
     num: 3267,
@@ -9381,7 +9846,7 @@ const Moves = {
     name: "Mystic Chant",
     pp: 20,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     secondary: null,
     target: "normal",
     type: "Fairy",
@@ -9472,7 +9937,7 @@ const Moves = {
     name: "Necro Magic",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1, heal: 1 },
+    flags: { protect: 1, mirror: 1, heal: 1, magic: 1 },
     drain: [1, 2],
     secondary: null,
     target: "normal",
@@ -9487,7 +9952,7 @@ const Moves = {
     name: "Necro Magic Eldritch",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1, heal: 1 },
+    flags: { protect: 1, mirror: 1, heal: 1, magic: 1 },
     drain: [1, 2],
     secondary: null,
     target: "normal",
@@ -9502,7 +9967,7 @@ const Moves = {
     name: "Necrotic Punch",
     pp: 15,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1, punch: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1, magic: 1 },
     secondary: {
       chance: 10,
       status: "par"
@@ -9547,7 +10012,7 @@ const Moves = {
     name: "New Moon",
     pp: 5,
     priority: 0,
-    flags: {},
+    flags: { magic: 1 },
     weather: "Darkness",
     secondary: null,
     target: "all",
@@ -9563,7 +10028,7 @@ const Moves = {
     name: "Niflheim",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1, metronome: 1 },
+    flags: { protect: 1, mirror: 1, metronome: 1, magic: 1 },
 	onModifyMove(move) {
       if (this.field.isWeather(["hail", "snow"]))
         move.accuracy = true;
@@ -9574,6 +10039,10 @@ const Moves = {
     },
     target: "normal",
     type: "Ice",
+  },
+  nightslash: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, slicing: 1, magic: 1 }
   },
   nimbusfist: {
     num: 3273,
@@ -9795,7 +10264,7 @@ const Moves = {
     name: "Otherworldly Tentacles",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     onHit(target, source, move) {
       target.addVolatile("trapped", source, move, "trapper");
     },
@@ -9895,6 +10364,32 @@ const Moves = {
     target: "randomNormal",
     type: "Poison",
     contestType: "Cool"
+  },
+  parasiteload: {
+    num: 3737,
+    accuracy: 100,
+    basePower: 80,
+    category: "Special",
+    name: "Parasite Load",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1 },
+    secondary: {
+      chance: 20,
+      onHit(target, source) {
+        const result = this.random(3);
+        if (result === 0) {
+          target.trySetStatus("psn", source);
+        } else if (result === 1) {
+          target.trySetStatus("par", source);
+        } else {
+          target.trySetStatus("fbt", source);
+        }
+      }
+    },
+    target: "normal",
+    type: "Blood",
+    contestType: "Beautiful"
   },
   parasiticfungi: {
     num: 3282,
@@ -10033,7 +10528,7 @@ const Moves = {
     name: "Perplex",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
 	onBasePower(basePower, pokemon, target) {
       if (target.status === "confusion") {
         return this.chainModify(2);
@@ -10682,13 +11177,25 @@ const Moves = {
     type: "Nuclear",
     contestType: "Beautiful"
   },
+  psychic: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, metronome: 1, magic: 1 }
+  },
+  psychicfangs: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, bite: 1, magic: 1 }
+  },
+  psychicnoise: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1, metronome: 1, magic: 1 }
+  },
   psybeam: {
     inherit: true,
-	flags: { protect: 1, mirror: 1, beam: 1 }
+	flags: { protect: 1, mirror: 1, metronome: 1, beam: 1, magic: 1 }
   },
   psyblade: {
     inherit: true,
-	flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, slicing: 1, legendary: 1 }
+	flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, slicing: 1, legendary: 1, magic: 1 }
   },
   psybolt: {
     num: 3306,
@@ -10698,7 +11205,7 @@ const Moves = {
     name: "Psybolt",
     pp: 30,
     priority: 1,
-    flags: { protect: 1, mirror: 1, speed: 1 },
+    flags: { protect: 1, mirror: 1, speed: 1, magic: 1 },
     secondary: null,
     target: "normal",
     type: "Psychic",
@@ -10712,7 +11219,7 @@ const Moves = {
     name: "Psyburn",
     pp: 5,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     secondary: {
       chance: 50,
       self: {
@@ -10727,7 +11234,11 @@ const Moves = {
   },
   psychoboost: {
     inherit: true,
-	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1 }
+	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1, magic: 1 }
+  },
+  psychocut: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, metronome: 1, slicing: 1, magic: 1 }
   },
   psylight: {
     num: 3308,
@@ -10737,7 +11248,7 @@ const Moves = {
     name: "Psylight",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     secondary: {
       chance: 10,
       volatileStatus: "confusion"
@@ -10746,9 +11257,21 @@ const Moves = {
     type: "Psychic",
     contestType: "Cool"
   },
+  psyshieldbash: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, magic: 1 }
+  },
+  psyshock: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, metronome: 1, magic: 1 }
+  },
   psystrike: {
     inherit: true,
-	flags: { protect: 1, mirror: 1, legendary: 1 }
+	flags: { protect: 1, mirror: 1, legendary: 1, magic: 1 }
+  },
+  psywave: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, metronome: 1, magic: 1 }
   },
   puffup: {
     num: 3309,
@@ -10785,6 +11308,20 @@ const Moves = {
     },
     target: "normal",
     type: "Fighting",
+    contestType: "Tough"
+  },
+  puncture: {
+    num: 3729,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Puncture",
+    pp: 35,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Blood",
     contestType: "Tough"
   },
   pursuant: {
@@ -10993,7 +11530,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Rapid Spin", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail", "bloodsigil"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Rapid Spin", "[of] " + pokemon);
@@ -11007,7 +11544,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Rapid Spin", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail", "bloodsigil"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Rapid Spin", "[of] " + pokemon);
@@ -11115,6 +11652,10 @@ const Moves = {
     zMove: { boost: { evasion: 1 } },
     contestType: "Cool"
   },
+  reflect: {
+    inherit: true,
+	flags: { snatch: 1, metronome: 1, magic: 1 }
+  },
   reflectlight: {
     num: 3323,
     accuracy: true,
@@ -11123,7 +11664,7 @@ const Moves = {
     name: "Reflect Light",
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: { snatch: 1, magic: 1 },
     sideCondition: "reflect",
     secondary: null,
     target: "allySide",
@@ -11257,10 +11798,11 @@ const Moves = {
       noassist: 1,
       failcopycat: 1,
       failinstruct: 1,
-      failmimic: 1
+      failmimic: 1,
+	  magic: 1
     },
     onHit(target, source) {
-      const disallowedMoves = ["chatter", "sketch", "struggle"];
+      const disallowedMoves = ["chatter", "sketch", "replicate", "copypaste", "amalgamate", "struggle"];
       const move = target.lastMove;
       if (source.transformed || !move || source.moves.includes(move.id))
         return false;
@@ -11543,7 +12085,7 @@ const Moves = {
     name: "Rotting Sparks",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     multihit: [2, 5],
     secondary: null,
     target: "normal",
@@ -11594,11 +12136,11 @@ const Moves = {
   },
   sacredfire: {
     inherit: true,
-	flags: { protect: 1, mirror: 1, defrost: 1, metronome: 1, legendary: 1 }
+	flags: { protect: 1, mirror: 1, defrost: 1, metronome: 1, legendary: 1, magic: 1 }
   },
   sacredsword: {
     inherit: true,
-	flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, slicing: 1, legendary: 1 }
+	flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, slicing: 1, legendary: 1, magic: 1 }
   },
   sacrificialpact: {
     num: 3338,
@@ -11608,7 +12150,7 @@ const Moves = {
     name: "Sacrificial Pact",
     pp: 15,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, magic: 1 },
     recoil: [50, 100],
     secondary: null,
     target: "normal",
@@ -12428,6 +12970,10 @@ const Moves = {
     type: "Bug",
     contestType: "Cool"
   },
+  spiritbreak: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, magic: 1 }
+  },
   sizzlebeak: {
     num: 3373,
     accuracy: 95,
@@ -12467,6 +13013,32 @@ const Moves = {
     target: "normal",
     type: "Fire",
     contestType: "Tough"
+  },
+  sketch: {
+    inherit: true,
+	onHit(target, source) {
+      const disallowedMoves = ["chatter", "sketch", "replicate", "copypaste", "amalgamate", "struggle"];
+      const move = target.lastMove;
+      if (source.transformed || !move || source.moves.includes(move.id))
+        return false;
+      if (move.noSketch || move.isZ || move.isMax)
+        return false;
+      const sketchIndex = source.moves.indexOf("sketch");
+      if (sketchIndex < 0)
+        return false;
+      const sketchedMove = {
+        move: move.name,
+        id: move.id,
+        pp: move.pp,
+        maxpp: move.pp,
+        target: move.target,
+        disabled: false,
+        used: false
+      };
+      source.moveSlots[sketchIndex] = sketchedMove;
+      source.baseMoveSlots[sketchIndex] = sketchedMove;
+      this.add("-activate", source, "move: Sketch", move.name);
+    }
   },
   skydrop: {
     inherit: true,
@@ -12550,6 +13122,31 @@ const Moves = {
     type: "Sound",
     zMove: { effect: "crit2" },
     contestType: "Cute"
+  },
+  sleetstrike: {
+    num: 3728,
+    accuracy: 100,
+    basePower: 50,
+    category: "Physical",
+    name: "Sleet Strike",
+    pp: 25,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1 },
+    secondaries: [
+      {
+        chance: 10,
+        status: "fbt"
+      },
+      {
+        chance: 10,
+        boosts: {
+          atk: -1
+        }
+      }
+    ],
+    target: "normal",
+    type: "Ice",
+    contestType: "Cool"
   },
   slimeball: {
     num: 3505,
@@ -13254,7 +13851,8 @@ const Moves = {
       metronome: 1,
       nosleeptalk: 1,
       noassist: 1,
-      failinstruct: 1
+      failinstruct: 1,
+	  magic: 1
     },
     onModifyMove(move, source) {
       if (!source.volatiles["spiritaway"]) {
@@ -13414,7 +14012,7 @@ const Moves = {
     name: "Sprinkle",
     pp: 5,
     priority: 0,
-    flags: {},
+    flags: { magic: 1 },
     weather: "fairydust",
     secondary: null,
     target: "all",
@@ -13569,7 +14167,7 @@ const Moves = {
     name: "Starstorm",
     pp: 5,
     priority: 0,
-    flags: {},
+    flags: { magic: 1 },
     secondary: null,
     target: "normal",
     type: "Fairy",
@@ -13583,7 +14181,7 @@ const Moves = {
     name: "Starstorm Cosmic",
     pp: 5,
     priority: 0,
-    flags: {},
+    flags: { magic: 1 },
     secondary: null,
     target: "normal",
     type: "Cosmic",
@@ -13628,6 +14226,10 @@ const Moves = {
     target: "normal",
     type: "Rock",
     contestType: "Cool"
+  },
+  storedpower: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, metronome: 1, magic: 1 }
   },
   stormbomb: {
     num: 3540,
@@ -14069,6 +14671,33 @@ const Moves = {
     type: "Dark",
     contestType: "Clever"
   },
+  synapticbleed: {
+    num: 3741,
+    accuracy: 100,
+    basePower: 60,
+    category: "Special",
+    name: "Synaptic Bleed",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, magic: 1 },
+    secondary: null,
+	onBasePower(basePower, source, target, move) {
+      if (target.hasType("Psychic")) {
+        this.debug("Synaptic Bleed vs Psychic: power doubled");
+        return this.chainModify(2); // Doubles base power
+      }
+	},
+	onHit(target, source, move) {
+      if (target.hasType("Psychic") && this.randomChance(3, 10)) {
+        if (target.addVolatile("flinch")) {
+          this.add("-start", target, "flinch");
+        }
+      }
+	},
+    target: "normal",
+    type: "Blood",
+    contestType: "Tough"
+  },
   synthesis: {
     num: 235,
     accuracy: true,
@@ -14265,6 +14894,10 @@ const Moves = {
   technoblast: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, beam: 1, legendary: 1 }
+  },
+  teleport: {
+    inherit: true,
+	flags: { metronome: 1, magic: 1 }
   },
   tempest: {
     num: 3420,
@@ -14644,55 +15277,6 @@ const Moves = {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, kick: 1 }
   },
-  twirlenade: {
-    num: 3433,
-    accuracy: true,
-    basePower: 0,
-    category: "Status",
-    name: "Twirlenade",
-    pp: 5,
-    priority: 0,
-    flags: { snatch: 1 },
-    volatileStatus: "confusion",
-    boosts: {
-      spe: 2,
-      evasion: 1
-    },
-    secondary: null,
-    target: "self",
-    type: "Normal",
-    contestType: "Clever"
-  },
-  twisterwind: {
-    num: 3434,
-    accuracy: 100,
-    basePower: 40,
-    category: "Special",
-    name: "Twister Wind",
-    pp: 20,
-    priority: 0,
-    flags: { protect: 1, mirror: 1, wind: 1 },
-	onModifyType(move, pokemon, target) {
-      const dragonTypeEffectiveness = target.runEffectiveness(move);
-      move.type = "Wind";
-      const windTypeEffectiveness = target.runEffectiveness(move);
-      move.type = "Dragon";
-      if (dragonTypeEffectiveness === windTypeEffectiveness) {
-        if(pokemon.getTypes(false, true).includes("Wind")){
-          move.type = "Wind";
-        }
-      } else if(windTypeEffectiveness>dragonTypeEffectiveness){
-        move.type = "Wind"
-      }
-    },
-    secondary: {
-      chance: 20,
-      volatileStatus: "flinch"
-    },
-    target: "allAdjacentFoes",
-    type: "Dragon",
-    contestType: "Cool"
-  },
   trematerra: {
     num: 3632,
     accuracy: 100,
@@ -14722,7 +15306,7 @@ const Moves = {
     name: "Trick Shot",
     pp: 15,
     priority: 0,
-    flags: { bullet: 1, protect: 1, mirror: 1 },
+    flags: { bullet: 1, protect: 1, mirror: 1, magic: 1 },
     secondary: {
       chance: 30,
       volatileStatus: "flinch"
@@ -14791,7 +15375,56 @@ const Moves = {
   },
   twinbeam: {
     inherit: true,
-	flags: { protect: 1, mirror: 1, beam: 1 }
+	flags: { protect: 1, mirror: 1, beam: 1, magic: 1 }
+  },
+  twirlenade: {
+    num: 3433,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Twirlenade",
+    pp: 5,
+    priority: 0,
+    flags: { snatch: 1 },
+    volatileStatus: "confusion",
+    boosts: {
+      spe: 2,
+      evasion: 1
+    },
+    secondary: null,
+    target: "self",
+    type: "Normal",
+    contestType: "Clever"
+  },
+  twisterwind: {
+    num: 3434,
+    accuracy: 100,
+    basePower: 40,
+    category: "Special",
+    name: "Twister Wind",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, wind: 1 },
+	onModifyType(move, pokemon, target) {
+      const dragonTypeEffectiveness = target.runEffectiveness(move);
+      move.type = "Wind";
+      const windTypeEffectiveness = target.runEffectiveness(move);
+      move.type = "Dragon";
+      if (dragonTypeEffectiveness === windTypeEffectiveness) {
+        if(pokemon.getTypes(false, true).includes("Wind")){
+          move.type = "Wind";
+        }
+      } else if(windTypeEffectiveness>dragonTypeEffectiveness){
+        move.type = "Wind"
+      }
+    },
+    secondary: {
+      chance: 20,
+      volatileStatus: "flinch"
+    },
+    target: "allAdjacentFoes",
+    type: "Dragon",
+    contestType: "Cool"
   },
   typhoon: {
     num: 3437,
@@ -15064,6 +15697,22 @@ const Moves = {
     target: "normal",
     type: "Poison",
     contestType: "Tough"
+  },
+  vexation: {
+    num: 3714,
+    accuracy: 85,
+    basePower: 0,
+    category: "Status",
+    name: "Vexation",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, reflectable: 1, mirror: 1, magic: 1 },
+    status: "fbt",
+    secondary: null,
+    target: "normal",
+    type: "ice",
+    zMove: { boost: { spa: 1 } },
+    contestType: "Beautiful"
   },
   virugait: {
     num: 3443,
@@ -15430,7 +16079,7 @@ const Moves = {
     name: "Whispers Beyond the Veil",
     pp: 1,
     priority: 0,
-    flags: {},
+    flags: { magic: 1 },
     isZ: "eldrichiumz",
     secondary: null,
     target: "normal",
@@ -15469,7 +16118,7 @@ const Moves = {
     name: "Wicked Lash",
     pp: 10,
     priority: 0,
-    flags: { contact: 1, charge: 1, protect: 1, mirror: 1, slicing: 1, nosleeptalk: 1, failinstruct: 1 },
+    flags: { contact: 1, charge: 1, protect: 1, mirror: 1, slicing: 1, nosleeptalk: 1, failinstruct: 1, magic: 1 },
 	critRatio: 2,
     onTryMove(attacker, defender, move) {
       if (attacker.removeVolatile(move.id)) {
@@ -15555,6 +16204,10 @@ const Moves = {
     target: "normal",
     type: "Sound",
     contestType: "Cool"
+  },
+  willowisp: {
+    inherit: true,
+	flags: { protect: 1, reflectable: 1, mirror: 1, metronome: 1, magic: 1 }
   },
   windshear: {
     num: 3453,
@@ -15650,6 +16303,10 @@ const Moves = {
     target: "normal",
     type: "Dark",
     contestType: "Cute"
+  },
+  zenheadbutt: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, magic: 1 }
   },
   zenithbreak: {
     num: 3456,

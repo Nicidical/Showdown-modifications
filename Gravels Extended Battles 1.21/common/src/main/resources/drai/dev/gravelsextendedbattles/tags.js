@@ -126,6 +126,11 @@ const Tags = {
     desc: "Boosted 1.5x by Striker.",
     moveFilter: (move) => "kick" in move.flags
   },
+  magic: {
+    name: "Magic",
+    desc: "Boosted 1.2x by Blood Sigil.",
+    moveFilter: (move) => "magic" in move.flags
+  },
   bypassprotect: {
     name: "Bypass Protect",
     desc: "Bypasses Protect, Detect, King's Shield, and Spiky Shield.",

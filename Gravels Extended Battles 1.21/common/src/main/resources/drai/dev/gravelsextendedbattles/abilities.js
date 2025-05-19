@@ -430,6 +430,22 @@ const Abilities = {
     rating: 3.5,
     num: 3020
   },
+  borealinstinct: {
+    onBasePowerPriority: 19,
+    onBasePower(basePower, attacker, defender, move) {
+      const isIceType = attacker.hasType("Ice");
+	  const targetFrostbitten = defender.status === "fbt";
+	  const isBiteMove = move.flags && move.flags["bite"];
+	  if (isIceType && targetFrostbitten && isBiteMove) {
+        this.debug("Frostjaw boost");
+		return this.chainModify(1.5);
+      }
+    },
+    flags: {},
+    name: "Boreal Instinct",
+    rating: 3.5,
+    num: 3181
+  },
   bouncy: {
     onDamagingHitOrder: 1,
     onDamagingHit(damage, target, source, move) {
@@ -1357,6 +1373,19 @@ const Abilities = {
     name: "Frighten",
     rating: 3.5,
     num: 3069
+  },
+  frostheal: {
+    onDamagePriority: 1,
+    onDamage(damage, target, source, effect) {
+      if (effect.id === "fbt") {
+        this.heal(target.baseMaxhp / 8);
+        return false;
+      }
+    },
+    flags: {},
+    name: "Frost Heal",
+    rating: 4,
+    num: 3180
   },
   fruitrition: {
     onTryHealPriority: 19,

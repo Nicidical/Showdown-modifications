@@ -13,10 +13,13 @@
   "cobblemon.type.slime": "Slime",
   "cobblemon.type.sound": "Sound",
   "cobblemon.type.wind": "Wind",
+  
   "cobblemon.move.asteroidshot": "Asteroid Shot",
   "cobblemon.move.asteroidshot.desc": "The user calls Asteroids to rain from above. This may also leave the target with a burn.",
   "cobblemon.move.brace": "Brace",
   "cobblemon.move.brace.desc": "The user readies itself making it immune to critical hits. Attack and Sp. Attack fall but Defense and Sp. Defense Rise.",
+  "cobblemon.move.deepyawn": "Deep Yawn",
+  "cobblemon.move.deepyawn.desc": "The user yawns deeply, causing the foe to fall asleep immediately.",
   "cobblemon.move.causticbreath": "Caustic Breath",
   "cobblemon.move.causticbreath.desc": "A blast of corrosive breath rolls over the foe. It may lower the target's defenses.",
   "cobblemon.move.cheapshot": "Cheap Shot",
