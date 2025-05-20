@@ -125,6 +125,43 @@ const Moves = {
     type: "Plastic",
     contestType: "Tough"
   },
+  adrenalinecatheter: {
+    num: 3762,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Adrenaline Catheter",
+    pp: 5,
+    priority: 4,
+    flags: { noassist: 1, failcopycat: 1, heal: 1 },
+	heal: [2, 10],
+    stallingMove: true,
+    volatileStatus: "endure",
+    onPrepareHit(pokemon) {
+      return !!this.queue.willAct() && this.runEvent("StallMove", pokemon);
+    },
+    onHit(pokemon) {
+      pokemon.addVolatile("stall");
+    },
+    condition: {
+      duration: 1,
+      onStart(target) {
+        this.add("-singleturn", target, "move: Endure");
+      },
+      onDamagePriority: -10,
+      onDamage(damage, target, source, effect) {
+        if (effect?.effectType === "Move" && damage >= target.hp) {
+          this.add("-activate", target, "move: Endure");
+          return target.hp - 1;
+        }
+      }
+    },
+    secondary: null,
+    target: "adjacentAlly",
+    type: "Blood",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Tough"
+  },
   aeroblast: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, distance: 1, metronome: 1, wind: 1, legendary: 1 }
@@ -1327,6 +1364,120 @@ const Moves = {
     type: "Blood",
     contestType: "Cool"
   },
+  bloodblight: {
+    num: 3765,
+    accuracy: 100,
+    basePower: 50,
+    category: "Special",
+    name: "Blood Blight",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1 },
+	recoil: [2, 10],
+	onBasePower(basePower, pokemon, target) {
+      const weather = pokemon.effectiveWeather();
+      if (weather === "acidrain" || weather === "fallout") {
+        this.debug("boost by weather");
+        return this.chainModify(1.5);
+      }
+    },
+	onModifyMove(move, source, target) {
+      const poisonedWeathers = ["acidrain", "fallout"];
+      if (poisonedWeathers.includes(source.effectiveWeather())) {
+        move.secondaries = move.secondaries || [];
+        move.secondaries.push({
+          chance: 30,
+          status: "tox",
+        });
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Blood",
+    contestType: "Clever"
+  },
+  bloodclot: {
+    num: 3750,
+    accuracy: 100,
+    basePower: 70,
+    category: "Special",
+    name: "Blood Clot",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1, magic: 1 },
+    onEffectiveness(typeMod, target, type) {
+      if (type === "Fighting")
+        return 1;
+    },
+    secondary: null,
+    target: "normal",
+    type: "Blood",
+    contestType: "Beautiful"
+  },
+  blooddonation: {
+    num: 3763,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Blood Donation",
+    pp: 5,
+    priority: 0,
+    flags: { bypasssub: 1, allyanim: 1, metronome: 1, heal: 1 },
+	onHit(target, source) {
+      const hpToSacrifice = Math.floor(source.maxhp / 4);
+      if (source.hp <= hpToSacrifice) return false;
+
+      // Sacrifice HP
+      this.directDamage(hpToSacrifice, source);
+
+      // Heal the ally
+      this.heal(hpToSacrifice, target, source);
+
+      // Copy highest boost
+      let highestStat = null;
+      let highestValue = 0;
+      for (const stat in source.boosts) {
+        if (source.boosts[stat] > highestValue) {
+          highestStat = stat;
+          highestValue = source.boosts[stat];
+        }
+      }
+
+      if (highestStat && highestValue > 0) {
+        const boost = {};
+        boost[highestStat] = highestValue;
+        this.boost(boost, target, source, this.dex.moves.get("Blood Pact"));
+      }
+    },
+    onTryHit(target, source) {
+      // Only usable on ally, not on self or enemies
+      if (target === source || target.fainted) return false;
+      if (!target.side || target.side !== source.side) return false;
+    },
+    secondary: null,
+    target: "adjacentAlly",
+    type: "Blood",
+	zMove: { effect: "heal" },
+	contestType: "Clever"
+  },
+  bloodyresonance: {
+    num: 3748,
+    accuracy: 100,
+    basePower: 70,
+    category: "Special",
+    name: "Bloody Resonance",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1, sound: 1, magic: 1 },
+    onEffectiveness(typeMod, target, type) {
+      if (type === "Sound")
+        return 1;
+    },
+    secondary: null,
+    target: "normal",
+    type: "Blood",
+    contestType: "Beautiful"
+  },
   blockblitz: {
     num: 3484,
     accuracy: 70,
@@ -1343,6 +1494,88 @@ const Moves = {
     target: "normal",
     type: "Plastic",
     contestType: "Tough"
+  },
+  bloodharvest: {
+    num: 3761,
+    accuracy: 100,
+    basePower: 70,
+    category: "Physical",
+    name: "Blood Harvest",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, heal: 1, slicing: 1 },
+	onAfterHit(target, source, move) {
+      // If no damage was done or user fainted, abort
+      if (!target || !target.hp || source.fainted) return;
+
+      const damage = Math.floor(target.lastDamage / 2);
+      if (!damage) return;
+
+      // Default heal target is the source
+      let healTarget = source;
+
+      // In doubles: check if an ally has lower HP percentage than source
+      if (source.side.active.length > 1) {
+        for (const ally of source.side.active) {
+          if (!ally || ally.fainted) continue;
+          const allyHpRatio = ally.hp / ally.maxhp;
+          const healHpRatio = healTarget.hp / healTarget.maxhp;
+          if (allyHpRatio < healHpRatio) {
+            healTarget = ally;
+          }
+        }
+      }
+
+      // Heal the chosen target
+      this.heal(damage, healTarget, source, move);
+    },
+    secondary: null,
+    target: "normal",
+    type: "Blood",
+    contestType: "Cute"
+  },
+  bloodintheair: {
+    num: 3759,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Blood in the Air",
+    pp: 15,
+    priority: 2,
+    flags: { noassist: 1, failcopycat: 1 },
+	boosts: {
+      def: 2
+    },
+    volatileStatus: "bloodintheair",
+    onTry(source) {
+      return this.activePerHalf > 1;
+    },
+    condition: {
+      duration: 1,
+      onStart(target, source, effect) {
+        if (effect?.id === "zpower") {
+          this.add("-singleturn", target, "move: Blood in the Air", "[zeffect]");
+        } else {
+          this.add("-singleturn", target, "move: Blood in the Air");
+        }
+		// Lose 10% max HP
+		this.damage(target.maxhp / 10, target, target, this.dex.moves.get("bloodintheair"));
+      },
+      onFoeRedirectTargetPriority: 1,
+      onFoeRedirectTarget(target, source, source2, move) {
+        if (!this.effectState.target.isSkyDropped() && this.validTarget(this.effectState.target, source, move.target)) {
+          if (move.smartTarget)
+            move.smartTarget = false;
+          this.debug("Blood in the Air redirected target of move");
+          return this.effectState.target;
+        }
+      }
+    },
+    secondary: null,
+    target: "adjacentAllyOrSelf",
+    type: "Blood",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Cute"
   },
   bloodletting: {
     num: 3732,
@@ -1386,6 +1619,62 @@ const Moves = {
     type: "Blood",
     zMove: { boost: { def: 1 } },
     contestType: "Cool"
+  },
+  bloodstormblitz: {
+    num: 3755,
+    accuracy: 90,
+    basePower: 150,
+    category: "Special",
+    name: "Bloodstorm Blitz",
+    pp: 5,
+    priority: 0,
+    flags: { recharge: 1, protect: 1, mirror: 1, metronome: 1, magic: 1 },
+    self: {
+      volatileStatus: "mustrecharge"
+    },
+    secondary: null,
+    target: "allAdjacent",
+    type: "Blood",
+    contestType: "Cool"
+  },
+  bloodtransfusion: {
+    num: 3760,
+    accuracy: 100,
+    basePower: 70,
+    category: "Special",
+    name: "Blood Transfusion",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1, magic: 1, heal: 1 },
+	onAfterHit(target, source, move) {
+      // If no damage was done or user fainted, abort
+      if (!target || !target.hp || source.fainted) return;
+
+      const damage = Math.floor(target.lastDamage / 2);
+      if (!damage) return;
+
+      // Default heal target is the source
+      let healTarget = source;
+
+      // In doubles: check if an ally has lower HP percentage than source
+      if (source.side.active.length > 1) {
+        for (const ally of source.side.active) {
+          if (!ally || ally.fainted) continue;
+          const allyHpRatio = ally.hp / ally.maxhp;
+          const healHpRatio = healTarget.hp / healTarget.maxhp;
+          if (allyHpRatio < healHpRatio) {
+            healTarget = ally;
+          }
+        }
+      }
+
+      // Heal the chosen target
+      this.heal(damage, healTarget, source, move);
+    },
+    secondary: null,
+    target: "normal",
+    type: "Blood",
+    contestType: "Cute"
   },
   bloodytriggers: {
     num: 3550,
@@ -2034,6 +2323,25 @@ const Moves = {
     secondary: null,
     target: "normal",
     type: "Ground",
+    contestType: "Tough"
+  },
+  cerebralextraction: {
+    num: 3758,
+    accuracy: 100,
+    basePower: 75,
+    category: "Physical",
+    name: "Cerebral Extraction",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, heal: 1, metronome: 1 },
+	onAfterHit(target, source, move) {
+      if (target.fainted && move.totalDamage) {
+        this.heal(move.totalDamage, source);
+      }
+	},
+    secondary: null,
+    target: "normal",
+    type: "Blood",
     contestType: "Tough"
   },
   chairdrop: {
@@ -2860,6 +3168,21 @@ const Moves = {
     zMove: { boost: { spe: 1 } },
     contestType: "Beautiful"
   },
+  countsgambit: {
+    num: 3744,
+    accuracy: 100,
+    basePower: 200,
+    category: "Physical",
+    name: "Count's Gambit",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1, noparentalbond: 1 },
+    selfdestruct: "always",
+    secondary: null,
+    target: "allAdjacent",
+    type: "Blood",
+    contestType: "Beautiful"
+  },
   courtchange: {
     num: 756,
     accuracy: 100,
@@ -2994,6 +3317,62 @@ const Moves = {
     target: "normal",
     type: "Ice",
     contestType: "Tough"
+  },
+  crimsonchain: {
+    num: 3745,
+    accuracy: 100,
+    basePower: 80,
+    category: "Physical",
+    name: "Crimson chain",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, magic: 1 },
+    secondary: {
+      chance: 100,
+      onHit(target, source, move) {
+        if (source.isActive)
+          target.addVolatile("trapped", source, move, "trapper");
+      }
+    },
+    target: "normal",
+    type: "Blood",
+    contestType: "Tough"
+  },
+  crimsonfreeze: {
+    num: 3751,
+    accuracy: 100,
+    basePower: 75,
+    category: "Physical",
+    name: "Crimson Freeze",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, magic: 1 },
+    secondary: {
+      chance: 10,
+      status: "frz"
+    },
+    target: "normal",
+    type: "Blood",
+    contestType: "Beautiful"
+  },
+  crimsonjavelin: {
+    num: 3753,
+    accuracy: 100,
+    basePower: 70,
+    category: "Physical",
+    name: "Crimson Javelin",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, magic: 1 },
+	onModifyPriority(priority, source, target, move) {
+      if (target?.status) {
+        return priority + 1;
+      }
+	},
+    secondary: null,
+    target: "normal",
+    type: "Blood",
+    contestType: "Clever"
   },
   crimsonpact: {
     num: 3727,
@@ -3896,6 +4275,28 @@ const Moves = {
     target: "normal",
     type: "Water",
     contestType: "Cute"
+  },
+  desanguination: {
+    num: 3743,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Desanguination",
+    pp: 10,
+    priority: 0,
+    flags: { snatch: 1, metronome: 1, magic: 1 },
+    onHit(pokemon) {
+      if (pokemon.hp <= pokemon.maxhp / 4 || pokemon.maxhp === 1) {
+        return false;
+      }
+      this.directDamage(pokemon.maxhp / 4, pokemon, pokemon);
+      this.boost({ atk: 2, spe: 1 }, pokemon);
+    },
+    secondary: null,
+    target: "self",
+    type: "Blood",
+    zMove: { effect: "heal" },
+    contestType: "Cool"
   },
   detox: {
     num: 3098,
@@ -6193,6 +6594,25 @@ const Moves = {
     zMove: { boost: { spe: 1 } },
     contestType: "Beautiful"
   },
+  forcedcoagulation: {
+    num: 3749,
+    accuracy: 100,
+    basePower: 100,
+    category: "Special",
+    name: "Forced Coagulation",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1, magic: 1 },
+	recoil: [33, 100],
+    onEffectiveness(typeMod, target, type) {
+      if (type === "Slime" || type === "Water")
+        return 1;
+    },
+    secondary: null,
+    target: "normal",
+    type: "Blood",
+    contestType: "Beautiful"
+  },
   freezeshock: {
     inherit: true,
 	flags: { charge: 1, protect: 1, mirror: 1, nosleeptalk: 1, failinstruct: 1, legendary: 1 }
@@ -7995,6 +8415,24 @@ const Moves = {
     type: "Questionmark",
     contestType: "Beautiful"
   },
+  invasivevector: {
+    num: 3746,
+    accuracy: 80,
+    basePower: 100,
+    category: "Special",
+    name: "Invasive Vector",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+	recoil: [1, 6],
+    secondary: {
+      chance: 35,
+      volatileStatus: "perishsong"
+    },
+    target: "normal",
+    type: "Blood",
+    contestType: "Clever"
+  },
   ironsphere: {
     num: 3225,
     accuracy: 100,
@@ -8134,6 +8572,28 @@ const Moves = {
   junglehealing: {
     inherit: true,
 	flags: { heal: 1, bypasssub: 1, allyanim: 1, legendary: 1 }
+  },
+  killingfrenzy: {
+    num: 3754,
+    accuracy: 100,
+    basePower: 25,
+    category: "Physical",
+    name: "Killing Frenzy",
+    pp: 30,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1 },
+    multihit: [2, 5],
+    secondary: null,
+	onAfterMove(source, target, move) {
+      if (source && !source.fainted) {
+        this.boost({ def: -1 }, source, source, move);
+      }
+    },
+    target: "normal",
+    type: "Blood",
+    zMove: { basePower: 140 },
+    maxMove: { basePower: 130 },
+    contestType: "Cool"
   },
   kilobyte: {
     num: 3660,
@@ -11008,6 +11468,30 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Tough"
   },
+  preyingbite: {
+    num: 3747,
+    accuracy: 100,
+    basePower: 50,
+    category: "Physical",
+    name: "Preying Bite",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, bite: 1 },
+    onBasePower(basePower, source, target, move) {
+      if (target.status) {
+        return this.chainModify(2);
+      }
+	},
+	onAfterHit(target, source, move) {
+      if (target.status && move.totalDamage) {
+        this.heal(move.totalDamage / 4, source);
+      }
+	},
+    secondary: null,
+    target: "normal",
+    type: "Blood",
+    contestType: "Clever"
+  },
   primalscream: {
     num: 3301,
     accuracy: 100,
@@ -11629,6 +12113,26 @@ const Moves = {
     type: "Wind",
     contestType: "Cool"
   },
+  recklessrend: {
+    num: 3756,
+    accuracy: 100,
+    basePower: 90,
+    category: "Physical",
+    name: "Reckless Rend",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
+	critRatio: 2,
+    secondary: {
+      chance: 100,
+      self: {
+        volatileStatus: "confusion"
+      }
+    },
+    target: "normal",
+    type: "Blood",
+    contestType: "Beautiful"
+  },
   reflectivecloak: {
     num: 3322,
     accuracy: true,
@@ -11671,6 +12175,40 @@ const Moves = {
     type: "Light",
     zMove: { boost: { def: 1 } },
     contestType: "Clever"
+  },
+  reforgedflesh: {
+    num: 3757,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Reforged Flesh",
+    pp: 20,
+    priority: 0,
+    flags: { metronome: 1, magic: 1 },
+    onHit(target) {
+      if (target.hp <= target.maxhp / 10) return false; // Prevent fainting from sacrifice
+	  this.directDamage(target.maxhp / 10, target); // Sacrifice 10% max HP
+	  const stats = [];
+	  let stat;
+      for (stat in target.boosts) {
+        if (target.boosts[stat] < 6) {
+          stats.push(stat);
+        }
+      }
+      if (stats.length) {
+        const randomStat = this.sample(stats);
+        const boost = {};
+        boost[randomStat] = 3;
+        this.boost(boost);
+      } else {
+        return false;
+      }
+    },
+    secondary: null,
+    target: "adjacentAllyOrSelf",
+    type: "Blood",
+    zMove: { effect: "crit2" },
+    contestType: "Tough"
   },
   reformat: {
 	num: 3324,
@@ -12267,6 +12805,25 @@ const Moves = {
     type: "Sound",
     zMove: { boost: { atk: 1 } },
     contestType: "Clever"
+  },
+  searingplasma: {
+    num: 3752,
+    accuracy: 100,
+    basePower: 80,
+    category: "Special",
+    name: "Searing Plasma",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, defrost: 1, metronome: 1 },
+    thawsTarget: true,
+	recoil: [1, 4],
+    secondary: {
+      chance: 30,
+      status: "brn"
+    },
+    target: "normal",
+    type: "Blood",
+    contestType: "Tough"
   },
   searingshot: {
     inherit: true,
@@ -12866,6 +13423,52 @@ const Moves = {
     target: "self",
     type: "Ground",
     zMove: { effect: "clearnegativeboost" },
+    contestType: "Beautiful"
+  },
+  sigiltransfer: {
+    num: 3764,
+    accuracy: 95,
+    basePower: 60,
+    category: "Special",
+    name: "Sigil Transfer",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1, magic: 1 },
+    onTry(source) {
+      const userSide = source.side;
+      const foeSide = source.side.foe;
+      if (!userSide.sideConditions["bloodsigil"] && !foeSide.sideConditions["bloodsigil"]) {
+        this.add("-fail", source, "move: Sigil Transfer");
+        return false;
+      }
+    },
+    onModifyMove(move, source) {
+      const userSide = source.side;
+      const foeSide = source.side.foe;
+
+      let totalSigils = 0;
+      if (userSide.sideConditions["bloodsigil"]) totalSigils += 1;
+      if (foeSide.sideConditions["bloodsigil"]) totalSigils += 1;
+
+      // Prevent edge case errors: if no sigils, move won't be used anyway due to onTry()
+      if (totalSigils > 1) {
+        move.multihit = totalSigils;
+      }
+    },
+    onAfterMove(source) {
+      const userSide = source.side;
+      const foeSide = source.side.foe;
+
+      if (userSide.sideConditions["bloodsigil"]) {
+        userSide.removeSideCondition("bloodsigil");
+      }
+      if (foeSide.sideConditions["bloodsigil"]) {
+        foeSide.removeSideCondition("bloodsigil");
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Blood",
     contestType: "Beautiful"
   },
   signalbeam: {
