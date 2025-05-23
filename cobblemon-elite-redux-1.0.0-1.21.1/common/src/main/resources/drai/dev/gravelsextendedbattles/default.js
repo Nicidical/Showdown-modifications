@@ -206,6 +206,14 @@ const DefaultText = {
     endFromItem: "  [POKEMON]'s [ITEM] healed its frostbite!",
     damage: "  [POKEMON] was hurt by its frostbite!"
   },
+  bld: {
+    start: "  [POKEMON] is bleeding!",
+    startFromItem: "  [POKEMON] is bleeding by the [ITEM]!",
+    alreadyStarted: "  [POKEMON] is already bleeding!",
+    end: "  [POKEMON]'s bleeding was healed!",
+    endFromItem: "  [POKEMON]'s [ITEM] healed its bleeding!",
+    damage: "  [POKEMON] was hurt by its bleeding!"
+  },
   par: {
     start: "  [POKEMON] is paralyzed! It may be unable to move!",
     alreadyStarted: "  [POKEMON] is already paralyzed!",

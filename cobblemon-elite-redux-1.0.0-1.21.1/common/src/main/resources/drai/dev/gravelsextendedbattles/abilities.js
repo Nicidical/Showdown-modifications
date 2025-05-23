@@ -2619,15 +2619,15 @@ const Abilities = {
     rating: 4,
     num: 3140
   },
-  specialist: {
+  fieldexplorer: {
     onBasePowerPriority: 19,
     onBasePower(basePower, attacker, defender, move) {
-      if (move.flags["hm"]) {
-        this.debug("Specialist boost");
+      if (move.flags["field"]) {
+        this.debug("Field Explorer boost");
         return this.chainModify(1.5);
       }
     },
-    name: "Specialist",
+    name: "Field Explorer",
     rating: 3.5,
     num: 3141
   },

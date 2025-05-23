@@ -39,6 +39,7 @@ const Conditions = {
     onResidual(pokemon) {
       this.damage(pokemon.baseMaxhp / 16);
     },
+  /* 
 	onBeforeMovePriority: 10,
     onBeforeMove(pokemon, target, move) {
       if (move.flags["defrost"])
@@ -65,6 +66,23 @@ const Conditions = {
       if (move.type === "Fire" && move.category !== "Status") {
         target.cureStatus();
       }
+    }
+  */
+  },
+  bld: {
+    name: "bld",
+    effectType: "Status",
+    onStart(target, source, sourceEffect) {
+      if (sourceEffect && sourceEffect.effectType === "Ability") {
+        this.add("-status", target, "bld", "[from] ability: " + sourceEffect.name, "[of] " + source);
+      } else {
+        this.add("-status", target, "bld");
+      }
+    },
+    // Not using stat stages implemented in battle-actions.js (WIP)
+    onResidualOrder: 10,
+    onResidual(pokemon) {
+      this.damage(pokemon.baseMaxhp / 16);
     }
   },
   acidrain: {

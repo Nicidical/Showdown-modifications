@@ -88,17 +88,17 @@ const Tags = {
   },
   fist: {
     name: "Fist",
-    desc: "Boosted 1.2x by Iron Fist.",
+    desc: "Boosted 1.3x by Iron Fist.",
     moveFilter: (move) => "punch" in move.flags
   },
   pulse: {
     name: "Pulse",
-    desc: "Boosted 1.5x by Mega Launcher.",
+    desc: "Boosted 1.3x by Mega Launcher.",
     moveFilter: (move) => "pulse" in move.flags
   },
   bite: {
     name: "Bite",
-    desc: "Boosted 1.5x by Strong Jaw.",
+    desc: "Boosted 1.3x by Strong Jaw.",
     moveFilter: (move) => "bite" in move.flags
   },
   ballistic: {
@@ -108,27 +108,47 @@ const Tags = {
   },
   speed: {
     name: "Speed",
-    desc: "Boosted 1.5x by Acceleration.",
+    desc: "Boosted 1.3x by Acceleration.",
     moveFilter: (move) => "speed" in move.flags
   },
   lasers: {
     name: "Lasers",
-    desc: "Boosted 1.5x by Laser Focus.",
+    desc: "Boosted 1.3x by Laser Focus.",
     moveFilter: (move) => "beam" in move.flags
   },
-  hmmove: {
-    name: "HM Moves",
-    desc: "Boosted 1.5x by Specialist.",
-    moveFilter: (move) => "hm" in move.flags
+  field: {
+    name: "Field Moves",
+    desc: "Boosted 1.3x by Field Explorer.",
+    moveFilter: (move) => "field" in move.flags
   },
   kick: {
     name: "Kicking Moves",
-    desc: "Boosted 1.5x by Striker.",
+    desc: "Boosted 1.3x by Striker.",
     moveFilter: (move) => "kick" in move.flags
+  },
+  horn: {
+    name: "Horn Moves",
+    desc: "Boosted 1.3x by Mighty Horn.",
+    moveFilter: (move) => "horn" in move.flags
+  },
+  weather: {
+    name: "Weather Moves",
+    desc: "Cancelled out by Weather Control.",
+    moveFilter: (move) => "weather" in move.flags
+  },
+  throw: {
+    name: "Throwing Moves",
+    desc: "Boosted 50% by Rocky Payload.",
+    moveFilter: (move) => "throw" in move.flags
+  },
+  bone: {
+    name: "Bone Moves",
+    desc: "Affected by Bone Zone.",
+    moveFilter: (move) => "bone" in move.flags
   },
   magic: {
     name: "Magic",
-    desc: "Boosted 1.2x by Blood Sigil.",
+    desc: "Boosted 1.3x by Blood Sigil.",
     moveFilter: (move) => "magic" in move.flags
   },
   bypassprotect: {
